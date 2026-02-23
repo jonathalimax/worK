@@ -13,7 +13,7 @@ struct MonthlyChartView: View {
 				chartSection
 				summaryCards
 			}
-			.padding(16)
+			.padding()
 		}
 		.task {
 			await viewModel.loadCurrentMonth()
@@ -130,7 +130,7 @@ struct MonthlyChartView: View {
 			}
 		}
 		.frame(height: 220)
-		.padding(16)
+		.padding()
 		.background {
 			RoundedRectangle(cornerRadius: 14, style: .continuous)
 				.fill(.ultraThinMaterial)

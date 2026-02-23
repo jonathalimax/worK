@@ -171,7 +171,7 @@ private struct DashboardSnapshotView: View {
 			aiMessageView
 			statsGrid
 		}
-		.padding(16)
+		.padding()
 	}
 
 	// MARK: - AI Message

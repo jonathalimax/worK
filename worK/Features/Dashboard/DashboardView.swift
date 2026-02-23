@@ -11,14 +11,15 @@ struct DashboardView: View {
 			progressSection
 			aiMessageView
 
+			statsGrid
+
 			// Show Take a Break button only when working
 			if viewModel.trackingState == .working {
 				takeBreakButton
+					.padding(.bottom)
 			}
-
-			statsGrid
 		}
-		.padding(16)
+		.padding()
 	}
 
 	// MARK: - AI Message View

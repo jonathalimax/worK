@@ -60,7 +60,7 @@ private struct SettingsSnapshotView: View {
 			aboutSection
 			quitButton
 		}
-		.padding(16)
+		.padding()
 	}
 
 	// MARK: - Work Section

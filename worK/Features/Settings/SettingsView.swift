@@ -20,8 +20,9 @@ struct SettingsView: View {
 			generalSection
 			aboutSection
 			quitButton
+			Spacer()
 		}
-		.padding(16)
+		.padding()
 		.onAppear(perform: loadSettings)
 	}
 
@@ -44,10 +45,9 @@ struct SettingsView: View {
 						.monospacedDigit()
 				}
 
-				Spacer()
-
 				Slider(value: $targetHours, in: 1...12, step: 0.5) {
 					Text(String(localized: "Target Hours"))
+						.padding(.trailing)
 				}
 				.tint(.blue)
 				.onChange(of: targetHours) { _, newValue in
@@ -88,11 +88,24 @@ struct SettingsView: View {
 
 	private var remindersSection: some View {
 		VStack(alignment: .leading, spacing: 10) {
-			sectionHeader(String(localized: "Break Reminders"), icon: "bell.fill", color: .orange)
+			sectionHeader(String(localized: "Reminders"), icon: "bell.fill", color: .orange)
 
 			VStack(alignment: .leading, spacing: 14) {
+				Toggle(isOn: $registerExternally) {
+					Text(String(localized: "Register completed work"))
+						.font(.system(size: 13, weight: .medium))
+				}
+				.tint(.gray)
+				.onChange(of: registerExternally) { _, newValue in
+					@Dependency(\.settingsClient) var settings
+					settings.setRegisterExternally(newValue)
+				}
+
+				Divider()
+					.background(Color.white.opacity(0.08))
+
 				Toggle(isOn: $reminderEnabled) {
-					Text(String(localized: "Enable Break Reminders"))
+					Text(String(localized: "Break Reminders"))
 						.font(.system(size: 13, weight: .medium))
 				}
 				.tint(.orange)
@@ -115,10 +128,9 @@ struct SettingsView: View {
 								.monospacedDigit()
 						}
 
-						Spacer()
-
 						Slider(value: $reminderIntervalMinutes, in: 15...120, step: 15) {
 							Text(String(localized: "Reminder Interval"))
+								.padding(.trailing)
 						}
 						.tint(.orange)
 						.onChange(of: reminderIntervalMinutes) { _, newValue in
@@ -224,26 +236,17 @@ struct SettingsView: View {
 
 			VStack(alignment: .leading, spacing: 14) {
 				Toggle(isOn: $launchAtLogin) {
-					Text(String(localized: "Launch at Login"))
-						.font(.system(size: 13, weight: .medium))
+					HStack {
+						Text(String(localized: "Launch at Login"))
+							.font(.system(size: 13, weight: .medium))
+
+						Spacer()
+					}
 				}
 				.tint(.gray)
 				.onChange(of: launchAtLogin) { _, newValue in
 					@Dependency(\.settingsClient) var settings
 					settings.setLaunchAtLogin(newValue)
-				}
-
-				Divider()
-					.background(Color.white.opacity(0.08))
-
-				Toggle(isOn: $registerExternally) {
-					Text(String(localized: "Remind to register completed work"))
-						.font(.system(size: 13, weight: .medium))
-				}
-				.tint(.gray)
-				.onChange(of: registerExternally) { _, newValue in
-					@Dependency(\.settingsClient) var settings
-					settings.setRegisterExternally(newValue)
 				}
 			}
 			.padding(14)
@@ -399,5 +402,5 @@ struct SettingsView: View {
 
 #Preview {
 	SettingsView()
-		.frame(width: AppConstants.popoverWidth, height: 500)
+		.frame(width: AppConstants.popoverWidth, height: 700)
 }

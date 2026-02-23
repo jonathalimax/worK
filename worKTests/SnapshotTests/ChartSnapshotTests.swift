@@ -117,7 +117,7 @@ private struct ChartSnapshotView: View {
 				chart
 				summaryCards
 			}
-			.padding(16)
+			.padding()
 		}
 	}
 
@@ -196,7 +196,7 @@ private struct ChartSnapshotView: View {
 			}
 		}
 		.frame(height: 220)
-		.padding(16)
+		.padding()
 		.background {
 			RoundedRectangle(cornerRadius: 14, style: .continuous)
 				.fill(.ultraThinMaterial)

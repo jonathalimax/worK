@@ -118,7 +118,7 @@ struct PopoverContentView: View {
 			chartSection
 			historySection
 		}
-		.padding(16)
+		.padding()
 		.task {
 			await chartViewModel.loadCurrentMonth()
 			await historyViewModel.loadHistory()
@@ -238,7 +238,7 @@ struct PopoverContentView: View {
 			}
 		}
 		.frame(height: 220)
-		.padding(16)
+		.padding()
 		.background {
 			RoundedRectangle(cornerRadius: 14, style: .continuous)
 				.fill(.ultraThinMaterial)
