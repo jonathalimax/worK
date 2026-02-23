@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(swift:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(xcodegen generate:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(swiftlint lint:*)",
+      "Bash(find:*)",
+      "Bash(ruby -e:*)",
+      "Bash(/tmp/fix_file_path.rb:*)",
+      "Bash(ruby:*)",
+      "Bash(/tmp/test_screen_lock.swift << 'EOF'\nimport Foundation\n\nlet center = DistributedNotificationCenter.default\\(\\)\n\nlet lockObserver = center.addObserver\\(\n    forName: .init\\(\"com.apple.screenIsLocked\"\\),\n    object: nil,\n    queue: .main\n\\) { notification in\n    print\\(\"🔒 LOCK notification received!\"\\)\n    print\\(\"  Name: \\\\\\(notification.name\\)\"\\)\n    print\\(\"  Object: \\\\\\(String\\(describing: notification.object\\)\\)\"\\)\n    print\\(\"  UserInfo: \\\\\\(String\\(describing: notification.userInfo\\)\\)\"\\)\n}\n\nlet unlockObserver = center.addObserver\\(\n    forName: .init\\(\"com.apple.screenIsUnlocked\"\\),\n    object: nil,\n    queue: .main\n\\) { notification in\n    print\\(\"🔓 UNLOCK notification received!\"\\)\n    print\\(\"  Name: \\\\\\(notification.name\\)\"\\)\n    print\\(\"  Object: \\\\\\(String\\(describing: notification.object\\)\\)\"\\)\n    print\\(\"  UserInfo: \\\\\\(String\\(describing: notification.userInfo\\)\\)\"\\)\n}\n\nprint\\(\"Listening for screen lock/unlock notifications...\"\\)\nprint\\(\"Press Ctrl+Cmd+Q to lock the screen, or use the Apple menu.\"\\)\nprint\\(\"Press Ctrl+C to exit.\"\\)\n\nRunLoop.main.run\\(\\)\nEOF)",
+      "Bash(/tmp/search_notifications.swift:*)"
+    ]
+  }
+}
