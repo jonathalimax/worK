@@ -92,7 +92,7 @@ struct PopoverContentView: View {
 
 	@ViewBuilder
 	private var tabContent: some View {
-		ScrollView {
+		ScrollView(showsIndicators: false) {
 			switch selectedTab {
 			case .dashboard:
 				DashboardView(viewModel: viewModel)
