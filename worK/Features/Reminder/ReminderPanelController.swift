@@ -16,7 +16,7 @@ final class ReminderPanelController {
 		dismiss()
 
 		let panel = NSPanel(
-			contentRect: NSRect(x: 0, y: 0, width: 320, height: 240),
+			contentRect: NSRect(x: 0, y: 0, width: 340, height: 280),
 			styleMask: [.borderless, .nonactivatingPanel],
 			backing: .buffered,
 			defer: false

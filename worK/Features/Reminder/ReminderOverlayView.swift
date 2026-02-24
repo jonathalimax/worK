@@ -15,8 +15,8 @@ struct ReminderOverlayView: View {
 			messageSection
 			actionButtons
 		}
-		.padding(20)
-		.frame(width: 300)
+		.padding(24)
+		.frame(width: 320)
 		.background(.ultraThinMaterial)
 		.clipShape(RoundedRectangle(cornerRadius: 16))
 		.shadow(color: .black.opacity(0.2), radius: 20, y: 10)
@@ -31,10 +31,12 @@ struct ReminderOverlayView: View {
 	// MARK: - Header
 
 	private var headerIcon: some View {
-		Image(systemName: "cup.and.saucer.fill")
-			.font(.system(size: 36))
-			.foregroundStyle(.orange)
-			.symbolEffect(.pulse, options: .repeating)
+		LottieView(
+			animationName: "coffee-break",
+			loopMode: .loop,
+			animationSpeed: 1.2
+		)
+		.frame(width: 80, height: 80)
 	}
 
 	// MARK: - Message
@@ -44,7 +46,7 @@ struct ReminderOverlayView: View {
 			Text(String(localized: "Time for a Break"))
 				.font(.title3.weight(.semibold))
 
-			Text(String(localized: "You have been working for \(workedTime). A short break will help you stay productive."))
+			Text(String(localized: "You have been working for \(workedTime). A short break will help you stay productive.", comment: "Reminder message with worked time"))
 				.font(.callout)
 				.foregroundStyle(.secondary)
 				.multilineTextAlignment(.center)

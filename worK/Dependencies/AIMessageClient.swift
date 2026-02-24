@@ -34,6 +34,7 @@ extension AIMessageClient: DependencyKey {
 				do {
 					let session = LanguageModelSession()
 					let prompt: String
+                    let languageName = Locale.current.localizedString(forLanguageCode: Locale.current.languageCode ?? "en") ?? "English"
 
 					switch type {
 					case .motivational:
@@ -43,6 +44,7 @@ extension AIMessageClient: DependencyKey {
 							Generate a short motivational message (max 2 sentences) about productivity \
 							and work-life balance. Use a \(tone) tone. Do not use hashtags or emojis. \
 							Be genuine and specific, not generic.
+							The message must be in \(languageName).
 							"""
 					case .registrationReminder:
 						prompt = """
@@ -50,6 +52,7 @@ extension AIMessageClient: DependencyKey {
 							completed work hours in an external system. The tone should be friendly and \
 							congratulatory about completing the daily work goal, while gently reminding \
 							them to log their hours. Do not use hashtags or emojis.
+							The message must be in \(languageName).
 							"""
 					}
 
@@ -93,39 +96,39 @@ extension AIMessageClient {
 	}
 
 	private static let motivationalMessages: [String] = [
-		"Small consistent efforts compound into remarkable achievements over time.",
-		"Your focus today builds the foundation for tomorrow's success.",
-		"Take a moment to appreciate how far you've come this week.",
-		"Progress, not perfection, is what drives meaningful change.",
-		"The best work happens when you balance intensity with rest.",
-		"Every hour of focused work is an investment in your future self.",
-		"Remember: sustainable pace beats burnout every single time.",
-		"Your dedication today is writing the story of your career.",
-		"Deep work requires deep rest. Honor both equally.",
-		"The most productive people know when to stop and recharge.",
-		"Your attention is your most valuable resource. Spend it wisely.",
-		"Great ideas need space to breathe. Take breaks without guilt.",
-		"Consistency over intensity. Show up every day and the results follow.",
-		"You are building something meaningful, one focused session at a time.",
-		"The quality of your rest determines the quality of your work.",
-		"Trust the process. Each day adds another layer to your expertise.",
-		"Working smart means knowing when to push and when to pause.",
-		"Your future self will thank you for the boundaries you set today.",
-		"Excellence is a habit, not an act. Keep showing up.",
-		"The rhythm of work and rest creates the music of achievement."
+		String(localized: "Small consistent efforts compound into remarkable achievements over time."),
+		String(localized: "Your focus today builds the foundation for tomorrow's success."),
+		String(localized: "Take a moment to appreciate how far you've come this week."),
+		String(localized: "Progress, not perfection, is what drives meaningful change."),
+		String(localized: "The best work happens when you balance intensity with rest."),
+		String(localized: "Every hour of focused work is an investment in your future self."),
+		String(localized: "Remember: sustainable pace beats burnout every single time."),
+		String(localized: "Your dedication today is writing the story of your career."),
+		String(localized: "Deep work requires deep rest. Honor both equally."),
+		String(localized: "The most productive people know when to stop and recharge."),
+		String(localized: "Your attention is your most valuable resource. Spend it wisely."),
+		String(localized: "Great ideas need space to breathe. Take breaks without guilt."),
+		String(localized: "Consistency over intensity. Show up every day and the results follow."),
+		String(localized: "You are building something meaningful, one focused session at a time."),
+		String(localized: "The quality of your rest determines the quality of your work."),
+		String(localized: "Trust the process. Each day adds another layer to your expertise."),
+		String(localized: "Working smart means knowing when to push and when to pause."),
+		String(localized: "Your future self will thank you for the boundaries you set today."),
+		String(localized: "Excellence is a habit, not an act. Keep showing up."),
+		String(localized: "The rhythm of work and rest creates the music of achievement.")
 	]
 
 	private static let reminderMessages: [String] = [
-		"Great work today! Don't forget to register your completed hours in your time tracking system.",
-		"You've hit your daily goal! Remember to log these hours in your external system before signing off.",
-		"Excellent job reaching your target! Time to register your work hours for the day.",
-		"Daily target achieved! Make sure to record your completed hours in your tracking system.",
-		"Well done on completing your work goal! Don't forget to update your time logs.",
-		"Target hours reached! Remember to register today's work in your external tracking system.",
-		"Success! You've completed your daily hours. Time to log them in your system.",
-		"Fantastic work today! Please remember to register your hours externally.",
-		"You've met your daily goal! Don't forget to document your hours in the tracking system.",
-		"Great day of work! Make sure to register your completed hours before you finish."
+		String(localized: "Great work today! Don't forget to register your completed hours in your time tracking system."),
+		String(localized: "You've hit your daily goal! Remember to log these hours in your external system before signing off."),
+		String(localized: "Excellent job reaching your target! Time to register your work hours for the day."),
+		String(localized: "Daily target achieved! Make sure to record your completed hours in your tracking system."),
+		String(localized: "Well done on completing your work goal! Don't forget to update your time logs."),
+		String(localized: "Target hours reached! Remember to register today's work in your external tracking system."),
+		String(localized: "Success! You've completed your daily hours. Time to log them in your system."),
+		String(localized: "Fantastic work today! Please remember to register your hours externally."),
+		String(localized: "You've met your daily goal! Don't forget to document your hours in the tracking system."),
+		String(localized: "Great day of work! Make sure to register your completed hours before you finish.")
 	]
 }
 

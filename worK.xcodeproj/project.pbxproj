@@ -11,8 +11,11 @@
 		0393FC61FD3D3F6587924609 /* MonthlyChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24D31EBC4AFDA6CA7F0E7D2 /* MonthlyChartViewModel.swift */; };
 		041E6D7203B70C1AE12DE71E /* WorkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D25007407588CADF5C5670 /* WorkSession.swift */; };
 		05B8EB0A8DF0BD56AD0B5721 /* WorkDayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66475B008A262E13D5C28EFD /* WorkDayDetailView.swift */; };
+		0905FC5D9D475C9893A27807 /* SparkleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0052440C7A9E6E090C6B8AD5 /* SparkleCoordinator.swift */; };
 		0D869A6B8B47E3715FA47FA5 /* BreakSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14BE11732533932F13C0EA /* BreakSession.swift */; };
+		0FCAF84054E5FEAEC62FF470 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860D3E802D426526A660A14 /* SettingsClient.swift */; };
+		11115E63BBA6A6C6C3A854CB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		11715A5E415896662F2CB25E /* WorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532000D87FCD51C74160ADD /* WorkDay.swift */; };
 		12748A9E8799247E9D5E43A2 /* TrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2472A5D516BCB2317E70E4 /* TrackingState.swift */; };
 		16B70D3861547D638CA6B107 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 0B1983D4E8C517352BF8FD57 /* DependenciesMacros */; };
@@ -24,21 +27,29 @@
 		1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5777C4086D5E79C5CA328 /* ReminderService.swift */; };
 		209244B53E17AB75071D945F /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120E8C351462F29DA1D4746 /* PopoverContentView.swift */; };
 		21AA5A0DC1E3BB5EA8CC715C /* StatsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0DC546DC1EE9C3593A4F8 /* StatsCardView.swift */; };
+		2696081433D64BADC778081F /* clock-idle.json in Resources */ = {isa = PBXBuildFile; fileRef = BCB8AF48A4AC99429319F26D /* clock-idle.json */; };
+		2839A0FED42CCBC46F66196E /* PopoverTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898BF99F01425C19039DE5BC /* PopoverTab.swift */; };
 		28BFED8C260E9F2A5394AF2A /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B77F863D68B9CD1E31EA4E /* DailySummary.swift */; };
+		38E228608D3FF5B27A7635EF /* coffee-break.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC0F86F3CCA00D31DD28D7F /* coffee-break.json */; };
 		3A3C0A11AA3E1E1BF7B18077 /* TimeInterval+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CA0C1C57060868E72AC07E /* TimeInterval+Formatting.swift */; };
+		3A5540BF7CB4ECEAABB46AC6 /* ScreenLockClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E262AF5D78D7662ABCCD5D96 /* ScreenLockClient.swift */; };
 		3AD8C4DE5651B0281C0326C7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */; };
+		3BB8B5B6C48D9794040B5E82 /* clock-idle.json in Resources */ = {isa = PBXBuildFile; fileRef = BCB8AF48A4AC99429319F26D /* clock-idle.json */; };
 		3D854E95149BFAEEA49768DC /* AIMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B681AAAD4E596982B73855F /* AIMessageView.swift */; };
 		412CEC25152F9B4636FBB342 /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5EF064DFFA675F9F1FF922 /* Date+Helpers.swift */; };
 		4C384242D96E5E6E56233BBF /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
 		4F1051F9D7DB000FDB340433 /* ReminderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1605C74288BB3517881170B9 /* ReminderOverlayView.swift */; };
+		5106B523448FA6AD8A16EC79 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		54473A91FD0DD8A5842F0063 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD37309B1881791F793C43C /* DashboardView.swift */; };
 		593097D94FDC2C9EF386247C /* ReminderPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */; };
 		5932CC5CE3153B4ABF3D8EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0640017251C67A152990C5F /* Constants.swift */; };
+		5FA57BF9025D83FF752B71C1 /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CAE58DC70F3D3B3CC155B3 /* success.json */; };
 		64B4D02E1D3C85FFF60EB846 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
 		672C29E11AFB92CA8A809EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */; };
 		67E30F4F8E9024E2BD05ABD5 /* TimeInterval+Formatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CA0C1C57060868E72AC07E /* TimeInterval+Formatting.swift */; };
 		68893B3E306199D040DC45BB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65F657572FF2BC1DA93C96A1 /* SettingsView.swift */; };
 		6FAB006B2854B534B3790983 /* HistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE972C062B073A1DEBFD865 /* HistoryViewModel.swift */; };
+		735D2D0ECFBCDC5579BC8B6A /* UpdateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4410846912B737FCE3BF546B /* UpdateClient.swift */; };
 		73DF24355AFB7DFF5D06A4B9 /* DependenciesMacros in Frameworks */ = {isa = PBXBuildFile; productRef = E0A424CA59D97C58577B63A8 /* DependenciesMacros */; };
 		74ACFA81174334AAA1B8FB1B /* WorkDayDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66475B008A262E13D5C28EFD /* WorkDayDetailView.swift */; };
 		770632720FF82C6C4439AFC3 /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5EF064DFFA675F9F1FF922 /* Date+Helpers.swift */; };
@@ -46,6 +57,7 @@
 		7C3C638660F811FAD6640881 /* WorkDayQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF70CF897B80EB40BE6766E9 /* WorkDayQueries.swift */; };
 		7C61045ACB7569BC1D1C2443 /* TestDependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA1806DF99F3661E68992C9 /* TestDependencies.swift */; };
 		7DF59835438609FB51DA82D7 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66408F80229E2B939BA89008 /* ServiceManagement.framework */; };
+		8164B2C736F10554837517ED /* coffee-break.json in Resources */ = {isa = PBXBuildFile; fileRef = 1DC0F86F3CCA00D31DD28D7F /* coffee-break.json */; };
 		823D8EB41B5E4BAC6535353B /* WorkSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0D25007407588CADF5C5670 /* WorkSession.swift */; };
 		851DBEFA38E0AAF219E0B1F4 /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860D3E802D426526A660A14 /* SettingsClient.swift */; };
 		860F639384E0B2080DE9FBA6 /* worKApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 407CF8C92766C3D610A1A4D6 /* worKApp.swift */; };
@@ -55,11 +67,12 @@
 		8AEFA8A7FD601F30995F40F6 /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 9FB13880938F76F78587E8BC /* SQLiteData */; };
 		8B20C92A3B21764DD29FB1CC /* DailySummary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45B77F863D68B9CD1E31EA4E /* DailySummary.swift */; };
 		8BABDAC55D0BAC8A5115B076 /* SQLiteData in Frameworks */ = {isa = PBXBuildFile; productRef = 8D41E394DBEE170FBDEA2D14 /* SQLiteData */; };
-		8EA7757E165D6E4FD34E61B5 /* ScreenLockClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D59CBC6D94FC541C820472D /* ScreenLockClient.swift */; };
 		8EE57F2D26F0983E1AEBE91C /* TrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2472A5D516BCB2317E70E4 /* TrackingState.swift */; };
+		8F07D9AC72E3A11B37723DFC /* ScreenLockClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E262AF5D78D7662ABCCD5D96 /* ScreenLockClient.swift */; };
 		943EA22EF3EE962BD4F599C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0640017251C67A152990C5F /* Constants.swift */; };
 		96E8C8ECAE6B467C9FDA93BB /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC28DF4F60B7AEB69A40CED /* NotificationClient.swift */; };
 		979CE8A84B957477E183449F /* AIMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */; };
+		99153F3E843A9507E83C0B60 /* UpdateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4410846912B737FCE3BF546B /* UpdateClient.swift */; };
 		9EA5E8DBE1D7A8210415EF73 /* ChartSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB2BEB2C15678196BFE75CB /* ChartSnapshotTests.swift */; };
 		A242520794370D8164255FEC /* ReminderPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */; };
 		A31870146810B5908746BB27 /* MonthlyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3645867D105B72550F11EA /* MonthlyChartView.swift */; };
@@ -68,6 +81,7 @@
 		AB5D90115D4CDC4C7DF7F7B4 /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 4442A9036CA85AA53CDA1F76 /* Dependencies */; };
 		B069F42214B42362B17A3406 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575DC3712EB2B7E0098A9BA3 /* HistoryView.swift */; };
 		B19C1CA90B41DD6373E1DC47 /* SettingsSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F27955AFCD4597005745EC5F /* SettingsSnapshotTests.swift */; };
+		B8A362A3D464A39BA87A12D9 /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CAE58DC70F3D3B3CC155B3 /* success.json */; };
 		B995D9148A2CA787CCE755AB /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 575DC3712EB2B7E0098A9BA3 /* HistoryView.swift */; };
 		B9AD70031EC4C33A93753610 /* DashboardSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C80B7709DB1950048C7CD2A /* DashboardSnapshotTests.swift */; };
 		BB68EF10684958EF04B1E73C /* DatabaseBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5909D20355AAE99C457528A2 /* DatabaseBootstrap.swift */; };
@@ -79,21 +93,31 @@
 		DAFE8AF3FA1E5A08B80D3D9E /* AIMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B681AAAD4E596982B73855F /* AIMessageView.swift */; };
 		E040EF8687DBA9EA06A94B43 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16A957E2AB000D66409306 /* StatusBarController.swift */; };
 		E3B568505CF243D9C1D58C6F /* WorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532000D87FCD51C74160ADD /* WorkDay.swift */; };
+		E97E9BFC5907E97DF2A3A6AA /* SparkleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0052440C7A9E6E090C6B8AD5 /* SparkleCoordinator.swift */; };
+		E9963F72E0EA85CF63DB8A43 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC580F9ED45C61443270A082 /* Lottie */; };
+		ECA3A0018D1C33B9B9587274 /* PopoverTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 898BF99F01425C19039DE5BC /* PopoverTab.swift */; };
 		F0C81ED782E46F0E62BA7BDA /* NotificationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBC28DF4F60B7AEB69A40CED /* NotificationClient.swift */; };
+		F3BDCEF114E57E0FA11E27BA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5777C4086D5E79C5CA328 /* ReminderService.swift */; };
+		F9705F20E9CA6ED65175E948 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = A2862382529A29F66C792B6F /* Sparkle */; };
 		FAF473792CED791FC6AAFE78 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66408F80229E2B939BA89008 /* ServiceManagement.framework */; };
 		FBD7A7E355F46B417BA86584 /* StatsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0DC546DC1EE9C3593A4F8 /* StatsCardView.swift */; };
 		FE5A254CF0F8D9A9CDFFA894 /* AIMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0052440C7A9E6E090C6B8AD5 /* SparkleCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SparkleCoordinator.swift; sourceTree = "<group>"; };
 		05CA0C1C57060868E72AC07E /* TimeInterval+Formatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Formatting.swift"; sourceTree = "<group>"; };
+		07CAE58DC70F3D3B3CC155B3 /* success.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = success.json; sourceTree = "<group>"; };
 		0C2472A5D516BCB2317E70E4 /* TrackingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingState.swift; sourceTree = "<group>"; };
 		0CE972C062B073A1DEBFD865 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIMessageClient.swift; sourceTree = "<group>"; };
 		1605C74288BB3517881170B9 /* ReminderOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOverlayView.swift; sourceTree = "<group>"; };
 		1B3645867D105B72550F11EA /* MonthlyChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyChartView.swift; sourceTree = "<group>"; };
+		1DC0F86F3CCA00D31DD28D7F /* coffee-break.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "coffee-break.json"; sourceTree = "<group>"; };
+		2CD85414CCF6312197B871B3 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		407CF8C92766C3D610A1A4D6 /* worKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = worKApp.swift; sourceTree = "<group>"; };
+		4410846912B737FCE3BF546B /* UpdateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateClient.swift; sourceTree = "<group>"; };
 		45B77F863D68B9CD1E31EA4E /* DailySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
 		4FA1806DF99F3661E68992C9 /* TestDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDependencies.swift; sourceTree = "<group>"; };
 		5532000D87FCD51C74160ADD /* WorkDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDay.swift; sourceTree = "<group>"; };
@@ -105,11 +129,12 @@
 		66408F80229E2B939BA89008 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		66475B008A262E13D5C28EFD /* WorkDayDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDayDetailView.swift; sourceTree = "<group>"; };
 		6794AA0CD6B46339F87DEA83 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6937E59B9EC8F244E46077CB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6A14BE11732533932F13C0EA /* BreakSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakSession.swift; sourceTree = "<group>"; };
 		6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		6D59CBC6D94FC541C820472D /* ScreenLockClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ScreenLockClient.swift; sourceTree = "<group>"; };
 		7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPanelController.swift; sourceTree = "<group>"; };
 		8153072D466C1E7F9EC22C2C /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
+		898BF99F01425C19039DE5BC /* PopoverTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTab.swift; sourceTree = "<group>"; };
 		89A65766CC748264723B04EE /* worKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = worKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AB1921EFF76115BA25D51D0 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		8B681AAAD4E596982B73855F /* AIMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIMessageView.swift; sourceTree = "<group>"; };
@@ -118,6 +143,7 @@
 		B0D25007407588CADF5C5670 /* WorkSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkSession.swift; sourceTree = "<group>"; };
 		B2E5777C4086D5E79C5CA328 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
 		BB5EF064DFFA675F9F1FF922 /* Date+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Helpers.swift"; sourceTree = "<group>"; };
+		BCB8AF48A4AC99429319F26D /* clock-idle.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "clock-idle.json"; sourceTree = "<group>"; };
 		C24D31EBC4AFDA6CA7F0E7D2 /* MonthlyChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyChartViewModel.swift; sourceTree = "<group>"; };
 		C7705B72627E1E1311D7E876 /* worK.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = worK.entitlements; sourceTree = "<group>"; };
 		CF70CF897B80EB40BE6766E9 /* WorkDayQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDayQueries.swift; sourceTree = "<group>"; };
@@ -126,6 +152,7 @@
 		DA16A957E2AB000D66409306 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		DBD37309B1881791F793C43C /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		DC117540711B4D5596B6B126 /* HistorySnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySnapshotTests.swift; sourceTree = "<group>"; };
+		E262AF5D78D7662ABCCD5D96 /* ScreenLockClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLockClient.swift; sourceTree = "<group>"; };
 		EBB2BEB2C15678196BFE75CB /* ChartSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartSnapshotTests.swift; sourceTree = "<group>"; };
 		F27955AFCD4597005745EC5F /* SettingsSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSnapshotTests.swift; sourceTree = "<group>"; };
 		FBC28DF4F60B7AEB69A40CED /* NotificationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationClient.swift; sourceTree = "<group>"; };
@@ -153,6 +180,8 @@
 				8AEFA8A7FD601F30995F40F6 /* SQLiteData in Frameworks */,
 				AA74666F708B64F3C399146F /* Dependencies in Frameworks */,
 				16B70D3861547D638CA6B107 /* DependenciesMacros in Frameworks */,
+				F9705F20E9CA6ED65175E948 /* Sparkle in Frameworks */,
+				E9963F72E0EA85CF63DB8A43 /* Lottie in Frameworks */,
 				7DF59835438609FB51DA82D7 /* ServiceManagement.framework in Frameworks */,
 				D67532B13072ABBBC1F23009 /* AppKit.framework in Frameworks */,
 			);
@@ -222,8 +251,10 @@
 				1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */,
 				5909D20355AAE99C457528A2 /* DatabaseBootstrap.swift */,
 				FBC28DF4F60B7AEB69A40CED /* NotificationClient.swift */,
+				E262AF5D78D7662ABCCD5D96 /* ScreenLockClient.swift */,
 				5860D3E802D426526A660A14 /* SettingsClient.swift */,
-				6D59CBC6D94FC541C820472D /* ScreenLockClient.swift */,
+				0052440C7A9E6E090C6B8AD5 /* SparkleCoordinator.swift */,
+				4410846912B737FCE3BF546B /* UpdateClient.swift */,
 			);
 			path = Dependencies;
 			sourceTree = "<group>";
@@ -259,8 +290,10 @@
 		67E9246EE74D8076BFCD6210 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				F2CD03F38DE2979F95C91C88 /* Components */,
 				3DB623685D2EE14B1EF1DF28 /* Extensions */,
 				A0640017251C67A152990C5F /* Constants.swift */,
+				898BF99F01425C19039DE5BC /* PopoverTab.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -272,6 +305,16 @@
 				66408F80229E2B939BA89008 /* ServiceManagement.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		833ECE226C6301F853F3429E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				BCB8AF48A4AC99429319F26D /* clock-idle.json */,
+				1DC0F86F3CCA00D31DD28D7F /* coffee-break.json */,
+				07CAE58DC70F3D3B3CC155B3 /* success.json */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		8A855F9120B5904521077E31 /* Products */ = {
@@ -342,7 +385,9 @@
 		D1BDC4DDEC0358BA65757AD3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				833ECE226C6301F853F3429E /* Animations */,
 				6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */,
+				6937E59B9EC8F244E46077CB /* Localizable.xcstrings */,
 				C7705B72627E1E1311D7E876 /* worK.entitlements */,
 			);
 			path = Resources;
@@ -357,6 +402,14 @@
 				F27955AFCD4597005745EC5F /* SettingsSnapshotTests.swift */,
 			);
 			path = SnapshotTests;
+			sourceTree = "<group>";
+		};
+		F2CD03F38DE2979F95C91C88 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				2CD85414CCF6312197B871B3 /* LottieView.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		FA41B7DE3D5D292D1FD4D4F2 /* Dashboard */ = {
@@ -398,6 +451,8 @@
 				9FB13880938F76F78587E8BC /* SQLiteData */,
 				EFEB4459FF2373A4F11E74EF /* Dependencies */,
 				0B1983D4E8C517352BF8FD57 /* DependenciesMacros */,
+				A2862382529A29F66C792B6F /* Sparkle */,
+				AC580F9ED45C61443270A082 /* Lottie */,
 			);
 			productName = worK;
 			productReference = D59458FEBF47CE31B8428F72 /* worK.app */;
@@ -442,16 +497,20 @@
 			knownRegions = (
 				Base,
 				en,
+				es,
+				fr,
+				pt,
 			);
 			mainGroup = 0CE5DAFC4783E100FDC2DFF0;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				FC6300BCBE75F918A4A0CD5B /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				67D3392BDB5305EF91301496 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				C6D00376EEC49891111B1416 /* XCRemoteSwiftPackageReference "sqlite-data" */,
 				3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				7EF8FF6F3A784524EDC0C8BC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 8A855F9120B5904521077E31 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -467,6 +526,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				3AD8C4DE5651B0281C0326C7 /* Assets.xcassets in Resources */,
+				F3BDCEF114E57E0FA11E27BA /* Localizable.xcstrings in Resources */,
+				2696081433D64BADC778081F /* clock-idle.json in Resources */,
+				8164B2C736F10554837517ED /* coffee-break.json in Resources */,
+				5FA57BF9025D83FF752B71C1 /* success.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +538,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				672C29E11AFB92CA8A809EB2 /* Assets.xcassets in Resources */,
+				11115E63BBA6A6C6C3A854CB /* Localizable.xcstrings in Resources */,
+				3BB8B5B6C48D9794040B5E82 /* clock-idle.json in Resources */,
+				38E228608D3FF5B27A7635EF /* coffee-break.json in Resources */,
+				B8A362A3D464A39BA87A12D9 /* success.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,20 +565,25 @@
 				D0B6A83B1E7B70CDA36F47D9 /* HistorySnapshotTests.swift in Sources */,
 				B995D9148A2CA787CCE755AB /* HistoryView.swift in Sources */,
 				BEBE643A717927B262AEABB6 /* HistoryViewModel.swift in Sources */,
+				5106B523448FA6AD8A16EC79 /* LottieView.swift in Sources */,
 				A31870146810B5908746BB27 /* MonthlyChartView.swift in Sources */,
 				88B17DFD583BC9FE9B987262 /* MonthlyChartViewModel.swift in Sources */,
 				96E8C8ECAE6B467C9FDA93BB /* NotificationClient.swift in Sources */,
 				209244B53E17AB75071D945F /* PopoverContentView.swift in Sources */,
+				2839A0FED42CCBC46F66196E /* PopoverTab.swift in Sources */,
 				4F1051F9D7DB000FDB340433 /* ReminderOverlayView.swift in Sources */,
 				A242520794370D8164255FEC /* ReminderPanelController.swift in Sources */,
 				F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */,
+				8F07D9AC72E3A11B37723DFC /* ScreenLockClient.swift in Sources */,
 				851DBEFA38E0AAF219E0B1F4 /* SettingsClient.swift in Sources */,
 				B19C1CA90B41DD6373E1DC47 /* SettingsSnapshotTests.swift in Sources */,
 				874A329B49CFB748261B5608 /* SettingsView.swift in Sources */,
+				0905FC5D9D475C9893A27807 /* SparkleCoordinator.swift in Sources */,
 				FBD7A7E355F46B417BA86584 /* StatsCardView.swift in Sources */,
 				7C61045ACB7569BC1D1C2443 /* TestDependencies.swift in Sources */,
 				3A3C0A11AA3E1E1BF7B18077 /* TimeInterval+Formatting.swift in Sources */,
 				12748A9E8799247E9D5E43A2 /* TrackingState.swift in Sources */,
+				99153F3E843A9507E83C0B60 /* UpdateClient.swift in Sources */,
 				E3B568505CF243D9C1D58C6F /* WorkDay.swift in Sources */,
 				05B8EB0A8DF0BD56AD0B5721 /* WorkDayDetailView.swift in Sources */,
 				A5E353E53E84ACB9F775AFDA /* WorkDayQueries.swift in Sources */,
@@ -536,26 +608,30 @@
 				770632720FF82C6C4439AFC3 /* Date+Helpers.swift in Sources */,
 				B069F42214B42362B17A3406 /* HistoryView.swift in Sources */,
 				6FAB006B2854B534B3790983 /* HistoryViewModel.swift in Sources */,
+				0FCAF84054E5FEAEC62FF470 /* LottieView.swift in Sources */,
 				16C42238E790E99BBC47FA6B /* MonthlyChartView.swift in Sources */,
 				0393FC61FD3D3F6587924609 /* MonthlyChartViewModel.swift in Sources */,
 				F0C81ED782E46F0E62BA7BDA /* NotificationClient.swift in Sources */,
 				0163E930BFA40484C59DF43A /* PopoverContentView.swift in Sources */,
+				ECA3A0018D1C33B9B9587274 /* PopoverTab.swift in Sources */,
 				19A093E70C0EE736F44DDAF1 /* ReminderOverlayView.swift in Sources */,
 				593097D94FDC2C9EF386247C /* ReminderPanelController.swift in Sources */,
 				1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */,
+				3A5540BF7CB4ECEAABB46AC6 /* ScreenLockClient.swift in Sources */,
 				10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */,
 				68893B3E306199D040DC45BB /* SettingsView.swift in Sources */,
+				E97E9BFC5907E97DF2A3A6AA /* SparkleCoordinator.swift in Sources */,
 				21AA5A0DC1E3BB5EA8CC715C /* StatsCardView.swift in Sources */,
 				E040EF8687DBA9EA06A94B43 /* StatusBarController.swift in Sources */,
 				67E30F4F8E9024E2BD05ABD5 /* TimeInterval+Formatting.swift in Sources */,
 				8EE57F2D26F0983E1AEBE91C /* TrackingState.swift in Sources */,
+				735D2D0ECFBCDC5579BC8B6A /* UpdateClient.swift in Sources */,
 				11715A5E415896662F2CB25E /* WorkDay.swift in Sources */,
 				74ACFA81174334AAA1B8FB1B /* WorkDayDetailView.swift in Sources */,
 				7C3C638660F811FAD6640881 /* WorkDayQueries.swift in Sources */,
 				86E75DE122485A9209E3D53A /* WorkDayViewModel.swift in Sources */,
 				041E6D7203B70C1AE12DE71E /* WorkSession.swift in Sources */,
 				860F639384E0B2080DE9FBA6 /* worKApp.swift in Sources */,
-				8EA7757E165D6E4FD34E61B5 /* ScreenLockClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -612,6 +688,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_LSMinimumSystemVersion = 15.0;
 				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
+				INFOPLIST_KEY_SUFeedURL = "https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml";
+				INFOPLIST_KEY_SUScheduledCheckInterval = 14400;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -697,6 +776,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_KEY_LSMinimumSystemVersion = 15.0;
 				INFOPLIST_KEY_LSUIElement = YES;
+				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
+				INFOPLIST_KEY_SUFeedURL = "https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml";
+				INFOPLIST_KEY_SUScheduledCheckInterval = 14400;
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -798,6 +880,14 @@
 				minimumVersion = 1.11.0;
 			};
 		};
+		67D3392BDB5305EF91301496 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.0;
+			};
+		};
 		7EF8FF6F3A784524EDC0C8BC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
@@ -812,6 +902,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.6.0;
+			};
+		};
+		FC6300BCBE75F918A4A0CD5B /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -836,6 +934,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C6D00376EEC49891111B1416 /* XCRemoteSwiftPackageReference "sqlite-data" */;
 			productName = SQLiteData;
+		};
+		A2862382529A29F66C792B6F /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 67D3392BDB5305EF91301496 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+		AC580F9ED45C61443270A082 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FC6300BCBE75F918A4A0CD5B /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		E0A424CA59D97C58577B63A8 /* DependenciesMacros */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -13,6 +13,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		// Hide dock icon -- this is a menubar-only app
 		NSApp.setActivationPolicy(.accessory)
 
+		// Initialize Sparkle auto-updater
+		_ = SparkleCoordinator.shared
+
 		// Initialize the status bar
 		let controller = StatusBarController()
 		statusBarController = controller

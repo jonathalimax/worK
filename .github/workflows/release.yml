@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '16.0'
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Resolve Swift Package Dependencies
+        run: xcodebuild -resolvePackageDependencies -scheme worK
+
+      - name: Build Release
+        run: |
+          xcodebuild -scheme worK \
+            -configuration Release \
+            -archivePath build/worK.xcarchive \
+            archive \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Export Archive
+        run: |
+          mkdir -p build/Release
+          cp -R build/worK.xcarchive/Products/Applications/worK.app build/Release/
+
+      - name: Create ZIP for Distribution
+        run: |
+          cd build/Release
+          zip -r ../../worK.zip worK.app
+          cd ../..
+
+      - name: Install Sparkle Tools
+        run: |
+          # Download and extract Sparkle tools
+          curl -L https://github.com/sparkle-project/Sparkle/releases/download/2.6.0/Sparkle-2.6.0.tar.xz -o sparkle.tar.xz
+          tar -xf sparkle.tar.xz
+          chmod +x bin/generate_appcast
+          chmod +x bin/sign_update
+
+      - name: Sign Update with EdDSA
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          echo "$SPARKLE_PRIVATE_KEY" > sparkle_key.txt
+          SIGNATURE=$(./bin/sign_update worK.zip -f sparkle_key.txt)
+          echo "SPARKLE_SIGNATURE=$SIGNATURE" >> $GITHUB_ENV
+          rm sparkle_key.txt
+
+      - name: Get Version
+        id: version
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: worK.zip
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Appcast
+        run: |
+          # Generate appcast using Sparkle's tool
+          ./bin/generate_appcast ./
+
+          # Commit and push updated appcast.xml
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add appcast.xml
+          git commit -m "Update appcast for version ${{ steps.version.outputs.VERSION }}" || echo "No changes to appcast"
+          git push origin HEAD:main || echo "Failed to push appcast update"

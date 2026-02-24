@@ -46,7 +46,7 @@ struct DashboardView: View {
 			HStack(spacing: 8) {
 				Image(systemName: "cup.and.saucer.fill")
 					.font(.system(size: 14, weight: .semibold))
-				Text("Take a Break")
+				Text(String(localized: "Take a Break"))
 					.font(.system(size: 14, weight: .semibold))
 			}
 			.foregroundStyle(.white)
@@ -104,10 +104,19 @@ struct DashboardView: View {
 
 				// Center content
 				VStack(spacing: 6) {
-					Text(viewModel.workedSeconds.formattedHoursMinutes)
-						.font(.system(size: 36, weight: .bold, design: .rounded))
-						.monospacedDigit()
-						.foregroundStyle(.primary)
+					if viewModel.trackingState == .idle && viewModel.workedSeconds == 0 {
+						LottieView(
+							animationName: "clock-idle",
+							loopMode: .loop,
+							animationSpeed: 0.8
+						)
+						.frame(width: 60, height: 60)
+					} else {
+						Text(viewModel.workedSeconds.formattedHoursMinutes)
+							.font(.system(size: 36, weight: .bold, design: .rounded))
+							.monospacedDigit()
+							.foregroundStyle(.primary)
+					}
 
 					Text(viewModel.trackingState.statusText)
 						.font(.system(size: 11, weight: .medium))
@@ -149,18 +158,25 @@ struct DashboardView: View {
 				HStack(spacing: 6) {
 					Image(systemName: "clock")
 						.font(.system(size: 11, weight: .semibold))
-					Text("\(viewModel.remainingSeconds.formattedHoursMinutes) remaining")
+					Text("\(viewModel.remainingSeconds.formattedHoursMinutes) \(String(localized: "remaining"))")
 						.font(.system(size: 12, weight: .medium))
 				}
 				.foregroundStyle(.secondary)
 			} else {
-				HStack(spacing: 6) {
-					Image(systemName: "checkmark.circle.fill")
-						.font(.system(size: 11, weight: .semibold))
-					Text(String(localized: "Target reached"))
-						.font(.system(size: 12, weight: .medium))
+				VStack(spacing: 8) {
+					LottieView(
+						animationName: "success",
+						loopMode: .playOnce,
+						animationSpeed: 1.5
+					)
+					.frame(width: 50, height: 50)
+
+					HStack(spacing: 6) {
+						Text(String(localized: "Target reached"))
+							.font(.system(size: 12, weight: .medium))
+					}
+					.foregroundStyle(.green)
 				}
-				.foregroundStyle(.green)
 			}
 		}
 	}
