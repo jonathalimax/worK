@@ -16,10 +16,10 @@ extension TimeInterval {
 		let minutes = (totalSeconds % 3600) / 60
 		var parts: [String] = []
 		if hours > 0 {
-			parts.append("\(hours) hour\(hours == 1 ? "" : "s")")
+			parts.append(String(localized: "^\(hours) hour(s)"))
 		}
 		if minutes > 0 || parts.isEmpty {
-			parts.append("\(minutes) minute\(minutes == 1 ? "" : "s")")
+			parts.append(String(localized: "^\(minutes) minute(s)"))
 		}
 		return parts.joined(separator: " ")
 	}

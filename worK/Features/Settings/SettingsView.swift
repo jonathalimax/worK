@@ -5,6 +5,8 @@ import SwiftUI
 // MARK: - SettingsView
 
 struct SettingsView: View {
+	let viewModel: WorkDayViewModel?
+
 	@State private var targetHours: Double = AppConstants.defaultTargetHours
 	@State private var launchAtLogin = false
 	@State private var reminderEnabled = true
@@ -13,11 +15,16 @@ struct SettingsView: View {
 	@State private var stopRecordingTime: Int = AppConstants.defaultStopRecordingTime
 	@State private var registerExternally = true
 
+	init(viewModel: WorkDayViewModel? = nil) {
+		self.viewModel = viewModel
+	}
+
 	var body: some View {
 		VStack(alignment: .leading, spacing: 16) {
 			workSection
 			remindersSection
 			generalSection
+			supportSection
 			aboutSection
 			quitButton
 			Spacer()
@@ -53,6 +60,12 @@ struct SettingsView: View {
 				.onChange(of: targetHours) { _, newValue in
 					@Dependency(\.settingsClient) var settings
 					settings.setTargetHours(newValue)
+					// Update current work day's target hours
+					if let viewModel = viewModel {
+						Task {
+							await viewModel.updateTargetHours(newValue)
+						}
+					}
 				}
 			}
 			.padding(14)
@@ -310,6 +323,73 @@ struct SettingsView: View {
 		.buttonStyle(.plain)
 	}
 
+	// MARK: - Support Section
+
+	private var supportSection: some View {
+		VStack(alignment: .leading, spacing: 10) {
+			sectionHeader(String(localized: "Support"), icon: "heart.fill", color: .pink)
+
+			VStack(alignment: .leading, spacing: 14) {
+				Text(String(localized: "If worK helps your day, consider supporting its development!"))
+					.font(.system(size: 12, weight: .regular))
+					.foregroundStyle(.secondary)
+					.fixedSize(horizontal: false, vertical: true)
+
+				Divider()
+					.background(Color.white.opacity(0.08))
+
+				Button {
+					if let url = URL(string: AppConstants.githubSponsorsURL) {
+						NSWorkspace.shared.open(url)
+					}
+				} label: {
+					HStack {
+						Image(systemName: "heart.circle.fill")
+							.font(.system(size: 14, weight: .semibold))
+							.foregroundStyle(.pink)
+
+						Text(String(localized: "GitHub Sponsors"))
+							.font(.system(size: 13, weight: .medium))
+
+						Spacer()
+
+						Image(systemName: "arrow.up.right")
+							.font(.system(size: 11, weight: .semibold))
+							.foregroundStyle(.secondary)
+					}
+					.contentShape(Rectangle())
+				}
+				.buttonStyle(.plain)
+			}
+			.padding(14)
+			.background {
+				RoundedRectangle(cornerRadius: 14, style: .continuous)
+					.fill(.ultraThinMaterial)
+					.opacity(0.4)
+					.background(
+						RoundedRectangle(cornerRadius: 14, style: .continuous)
+							.fill(Color(white: 0.08).opacity(0.2))
+					)
+					.overlay {
+						RoundedRectangle(cornerRadius: 14, style: .continuous)
+							.strokeBorder(
+								LinearGradient(
+									colors: [
+										Color.white.opacity(0.15),
+										Color.white.opacity(0.05)
+									],
+									startPoint: .topLeading,
+									endPoint: .bottomTrailing
+								),
+								lineWidth: 1.5
+							)
+					}
+			}
+			.shadow(color: .black.opacity(0.3), radius: 10, x: 0, y: 4)
+			.shadow(color: .black.opacity(0.15), radius: 2, x: 0, y: 1)
+		}
+	}
+
 	// MARK: - About Section
 
 	private var aboutSection: some View {
@@ -337,6 +417,27 @@ struct SettingsView: View {
 						.font(.system(size: 13, weight: .semibold))
 						.foregroundStyle(.secondary)
 				}
+
+				Divider()
+					.background(Color.white.opacity(0.08))
+
+				Button {
+					@Dependency(\.updateClient) var updateClient
+					updateClient.checkForUpdates()
+				} label: {
+					HStack {
+						Image(systemName: "arrow.down.circle.fill")
+							.font(.system(size: 14, weight: .semibold))
+							.foregroundStyle(.cyan)
+
+						Text(String(localized: "Check for Updates"))
+							.font(.system(size: 13, weight: .medium))
+
+						Spacer()
+					}
+					.contentShape(Rectangle())
+				}
+				.buttonStyle(.plain)
 			}
 			.padding(14)
 			.background {

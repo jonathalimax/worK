@@ -21,6 +21,7 @@ final class StatusBarController {
 
 		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 		popover = NSPopover()
+
 		popover.contentSize = NSSize(
 			width: AppConstants.popoverWidth,
 			height: AppConstants.popoverHeight
@@ -114,6 +115,13 @@ final class StatusBarController {
 			popover.performClose(nil)
 		} else {
 			guard let button = statusItem.button else { return }
+
+			// Recalculate size in case screen changed
+			popover.contentSize = NSSize(
+				width: AppConstants.popoverWidth,
+				height: AppConstants.popoverHeight
+			)
+
 			popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
 
 			// Ensure the popover content refreshes

@@ -122,7 +122,8 @@ struct MonthlyChartView: View {
 					.foregroundStyle(Color.white.opacity(0.1))
 				AxisValueLabel {
 					if let hours = value.as(Double.self) {
-						Text("\(Int(hours))h")
+						let measurement = Measurement(value: hours, unit: UnitDuration.hours)
+						Text(measurement.formatted(.measurement(width: .abbreviated, usage: .asProvided)))
 							.font(.system(size: 10, weight: .medium))
 							.foregroundStyle(.secondary)
 					}
@@ -176,13 +177,13 @@ struct MonthlyChartView: View {
 		HStack(spacing: 10) {
 			StatsCardView(
 				title: String(localized: "Total Hours"),
-				value: String(format: "%.1fh", viewModel.totalHoursThisMonth),
+				value: formatHours(viewModel.totalHoursThisMonth),
 				icon: "sum",
 				color: .blue
 			)
 			StatsCardView(
 				title: String(localized: "Daily Average"),
-				value: String(format: "%.1fh", viewModel.averageHoursPerDay),
+				value: formatHours(viewModel.averageHoursPerDay),
 				icon: "chart.line.uptrend.xyaxis",
 				color: .orange
 			)
@@ -190,6 +191,11 @@ struct MonthlyChartView: View {
 	}
 
 	// MARK: - Helpers
+
+	private func formatHours(_ hours: Double) -> String {
+		let totalSeconds: TimeInterval = hours * 3600
+		return totalSeconds.formattedHoursMinutes
+	}
 
 	private func barColor(for day: DayChartData) -> Color {
 		switch day.chartColor {

@@ -113,6 +113,18 @@ final class WorkDayViewModel {
 		}
 	}
 
+	/// Updates the target hours for the current work day.
+	func updateTargetHours(_ hours: Double) async {
+		guard let workDay = currentWorkDay else { return }
+
+		do {
+			try database.updateTargetHours(for: workDay.id, targetHours: hours)
+			await refreshStats()
+		} catch {
+			print("Failed to update target hours: \(error)")
+		}
+	}
+
 	/// Manually initiates a break by locking the screen.
 	/// This triggers the automatic screen lock observer which handles the actual break session.
 	func takeBreak() async {
@@ -299,15 +311,21 @@ final class WorkDayViewModel {
 			progress = dailySummary.progress(now: currentTime)
 
 			// Update tracking state based on active sessions
+			// Only update state if we're currently idle (initial state) or if we need to detect completion
 			let previousState = trackingState
-			if dailySummary.isOnBreak {
-				trackingState = .onBreak
-			} else if dailySummary.isWorking {
-				trackingState = .working
-			} else if workedSeconds > 0, remainingSeconds <= 0 {
-				trackingState = .completed
-			} else if workedSeconds > 0 {
-				trackingState = .idle
+			if trackingState == .idle {
+				// When idle, set state based on what's actually happening in the database
+				if dailySummary.isOnBreak {
+					trackingState = .onBreak
+				} else if dailySummary.isWorking {
+					trackingState = .working
+				}
+			} else {
+				// When already tracking, only check for completion state
+				// Don't override explicit state changes from screen events
+				if workedSeconds > 0, remainingSeconds <= 0, trackingState != .completed {
+					trackingState = .completed
+				}
 			}
 
 			if previousState != trackingState {
@@ -341,18 +359,18 @@ final class WorkDayViewModel {
 			statusBarText = AppConstants.appName
 		case .working:
 			if remainingSeconds > 0 {
-				statusBarText = "\(remainingSeconds.formattedHoursMinutes) left"
+				statusBarText = String(localized: "\(remainingSeconds.formattedHoursMinutes) left")
 			} else {
-				statusBarText = "Goal reached!"
+				statusBarText = String(localized: "Goal reached!")
 			}
 		case .onBreak:
 			if remainingSeconds > 0 {
-				statusBarText = "\(remainingSeconds.formattedHoursMinutes) left (break)"
+				statusBarText = String(localized: "\(remainingSeconds.formattedHoursMinutes) left (break)")
 			} else {
-				statusBarText = "Goal reached! (break)"
+				statusBarText = String(localized: "Goal reached! (break)")
 			}
 		case .completed:
-			statusBarText = "Day complete"
+			statusBarText = String(localized: "Day complete")
 		}
 	}
 }

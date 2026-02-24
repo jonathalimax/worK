@@ -80,6 +80,15 @@ extension DatabaseWriter {
 		}
 	}
 
+	/// Updates the target hours for a work day.
+	func updateTargetHours(for workDayId: UUID, targetHours: Double) throws {
+		try write { database in
+			var workDay = try WorkDay.find(database, key: workDayId)
+			workDay.targetHours = targetHours
+			try WorkDay.update(workDay).execute(database)
+		}
+	}
+
 	/// Builds a DailySummary for a given date.
 	func dailySummary(for date: Date, calendar: Calendar = .current) throws -> DailySummary? {
 		let normalized = calendar.startOfDay(for: date)

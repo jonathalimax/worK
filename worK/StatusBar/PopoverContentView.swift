@@ -9,7 +9,7 @@ struct PopoverContentView: View {
 	@State private var selectedTab: PopoverTab = .dashboard
 	@State private var chartViewModel = MonthlyChartViewModel()
 	@State private var historyViewModel = HistoryViewModel()
-	@State private var selectedWorkDay: WorkDay?
+	@State private var expandedWorkDayID: UUID?
 
 	var body: some View {
 		VStack(spacing: 0) {
@@ -29,9 +29,7 @@ struct PopoverContentView: View {
 		HStack(spacing: 8) {
 			ForEach(PopoverTab.allCases) { tab in
 				Button {
-					withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-						selectedTab = tab
-					}
+					selectedTab = tab
 				} label: {
 					VStack(spacing: 5) {
 						Image(systemName: tab.iconName)
@@ -58,7 +56,6 @@ struct PopoverContentView: View {
 										.strokeBorder(Color.accentColor.opacity(0.4), lineWidth: 1.5)
 								}
 								.shadow(color: Color.accentColor.opacity(0.3), radius: 6, x: 0, y: 3)
-								.transition(.scale.combined(with: .opacity))
 						}
 					}
 					.foregroundStyle(
@@ -99,16 +96,10 @@ struct PopoverContentView: View {
 			case .history:
 				combinedHistoryChartView
 			case .settings:
-				SettingsView()
+				SettingsView(viewModel: viewModel)
 			}
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)
-		.sheet(item: $selectedWorkDay) { workDay in
-			WorkDayDetailView(
-				workDay: workDay,
-				summary: historyViewModel.summary(for: workDay)
-			)
-		}
 	}
 
 	// MARK: - Combined History & Chart View
@@ -230,7 +221,8 @@ struct PopoverContentView: View {
 					.foregroundStyle(Color.white.opacity(0.1))
 				AxisValueLabel {
 					if let hours = value.as(Double.self) {
-						Text("\(Int(hours))h")
+						let measurement = Measurement(value: hours, unit: UnitDuration.hours)
+						Text(measurement.formatted(.measurement(width: .abbreviated, usage: .asProvided)))
 							.font(.system(size: 10, weight: .medium))
 							.foregroundStyle(.secondary)
 					}
@@ -282,13 +274,13 @@ struct PopoverContentView: View {
 		HStack(spacing: 10) {
 			StatsCardView(
 				title: String(localized: "Total Hours"),
-				value: String(format: "%.1fh", chartViewModel.totalHoursThisMonth),
+				value: formatHours(chartViewModel.totalHoursThisMonth),
 				icon: "sum",
 				color: .blue
 			)
 			StatsCardView(
 				title: String(localized: "Daily Average"),
-				value: String(format: "%.1fh", chartViewModel.averageHoursPerDay),
+				value: formatHours(chartViewModel.averageHoursPerDay),
 				icon: "chart.line.uptrend.xyaxis",
 				color: .orange
 			)
@@ -340,16 +332,29 @@ struct PopoverContentView: View {
 			} else {
 				VStack(spacing: 8) {
 					ForEach(historyViewModel.filteredWorkDays) { workDay in
-						HistoryRowView(
-							workDay: workDay,
-							summary: historyViewModel.summary(for: workDay),
-							onToggleRegistered: {
-								Task { await historyViewModel.toggleRegistered(for: workDay.id) }
-							},
-							onTap: {
-								selectedWorkDay = workDay
+						VStack(spacing: 0) {
+							HistoryRowView(
+								workDay: workDay,
+								summary: historyViewModel.summary(for: workDay),
+								isExpanded: expandedWorkDayID == workDay.id,
+								onToggleRegistered: {
+									Task { await historyViewModel.toggleRegistered(for: workDay.id) }
+								},
+								onTap: {
+									withAnimation(.smooth(duration: 0.3)) {
+										expandedWorkDayID = expandedWorkDayID == workDay.id ? nil : workDay.id
+									}
+								}
+							)
+
+							if expandedWorkDayID == workDay.id {
+								WorkDayDetailInlineView(
+									workDay: workDay,
+									summary: historyViewModel.summary(for: workDay)
+								)
+								.transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
 							}
-						)
+						}
 					}
 				}
 			}
@@ -368,37 +373,16 @@ struct PopoverContentView: View {
 		.frame(maxWidth: .infinity, minHeight: 150)
 	}
 
+	private func formatHours(_ hours: Double) -> String {
+		let totalSeconds: TimeInterval = hours * 3600
+		return totalSeconds.formattedHoursMinutes
+	}
+
 	private func barColor(for day: DayChartData) -> Color {
 		switch day.chartColor {
 		case .green: .green
 		case .yellow: .yellow
 		case .red: .red
-		}
-	}
-}
-
-// MARK: - PopoverTab
-
-enum PopoverTab: String, CaseIterable, Identifiable {
-	case dashboard
-	case history
-	case settings
-
-	var id: String { rawValue }
-
-	var title: String {
-		switch self {
-		case .dashboard: String(localized: "Today")
-		case .history: String(localized: "History")
-		case .settings: String(localized: "Settings")
-		}
-	}
-
-	var iconName: String {
-		switch self {
-		case .dashboard: "clock.fill"
-		case .history: "chart.bar.fill"
-		case .settings: "gearshape.fill"
 		}
 	}
 }

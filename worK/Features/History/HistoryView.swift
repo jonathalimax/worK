@@ -4,7 +4,7 @@ import SwiftUI
 
 struct HistoryView: View {
 	@State private var viewModel = HistoryViewModel()
-	@State private var selectedWorkDay: WorkDay?
+	@State private var expandedWorkDayID: UUID?
 
 	var body: some View {
 		VStack(spacing: 0) {
@@ -13,12 +13,6 @@ struct HistoryView: View {
 		}
 		.task {
 			await viewModel.loadHistory()
-		}
-		.sheet(item: $selectedWorkDay) { workDay in
-			WorkDayDetailView(
-				workDay: workDay,
-				summary: viewModel.summary(for: workDay)
-			)
 		}
 	}
 
@@ -64,23 +58,46 @@ struct HistoryView: View {
 			} else if viewModel.filteredWorkDays.isEmpty {
 				emptyState
 			} else {
-				ScrollView {
-					VStack(spacing: 8) {
-						ForEach(viewModel.filteredWorkDays) { workDay in
-							HistoryRowView(
-								workDay: workDay,
-								summary: viewModel.summary(for: workDay),
-								onToggleRegistered: {
-									Task { await viewModel.toggleRegistered(for: workDay.id) }
-								},
-								onTap: {
-									selectedWorkDay = workDay
+				ScrollViewReader { proxy in
+					ScrollView {
+						VStack(spacing: 8) {
+							ForEach(viewModel.filteredWorkDays) { workDay in
+								VStack(spacing: 0) {
+									HistoryRowView(
+										workDay: workDay,
+										summary: viewModel.summary(for: workDay),
+										isExpanded: expandedWorkDayID == workDay.id,
+										onToggleRegistered: {
+											Task { await viewModel.toggleRegistered(for: workDay.id) }
+										},
+										onTap: {
+											withAnimation(.smooth(duration: 0.3)) {
+												expandedWorkDayID = expandedWorkDayID == workDay.id ? nil : workDay.id
+											}
+										}
+									)
+
+									if expandedWorkDayID == workDay.id {
+										WorkDayDetailInlineView(
+											workDay: workDay,
+											summary: viewModel.summary(for: workDay)
+										)
+										.transition(.opacity.combined(with: .scale(scale: 0.95, anchor: .top)))
+									}
 								}
-							)
+								.id(workDay.id)
+							}
+						}
+						.padding(.horizontal, 16)
+						.padding(.bottom, 16)
+					}
+					.onChange(of: expandedWorkDayID) { _, newID in
+						if let id = newID {
+							withAnimation(.smooth(duration: 0.3)) {
+								proxy.scrollTo(id, anchor: .top)
+							}
 						}
 					}
-					.padding(.horizontal, 16)
-					.padding(.bottom, 16)
 				}
 			}
 		}
@@ -104,6 +121,7 @@ struct HistoryView: View {
 struct HistoryRowView: View {
 	let workDay: WorkDay
 	let summary: DailySummary?
+	let isExpanded: Bool
 	let onToggleRegistered: () -> Void
 	let onTap: () -> Void
 
@@ -114,6 +132,12 @@ struct HistoryRowView: View {
 				Spacer()
 				hoursColumn
 				registeredToggle
+
+				// Chevron indicator
+				Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+					.font(.system(size: 12, weight: .semibold))
+					.foregroundStyle(.secondary)
+					.frame(width: 20)
 			}
 			.padding(14)
 			.background {
@@ -129,8 +153,8 @@ struct HistoryRowView: View {
 							.strokeBorder(
 								LinearGradient(
 									colors: [
-										Color.white.opacity(0.15),
-										Color.white.opacity(0.05)
+										Color.white.opacity(isExpanded ? 0.25 : 0.15),
+										Color.white.opacity(isExpanded ? 0.15 : 0.05)
 									],
 									startPoint: .topLeading,
 									endPoint: .bottomTrailing
@@ -171,7 +195,7 @@ struct HistoryRowView: View {
 				HStack(spacing: 4) {
 					Image(systemName: "cup.and.saucer.fill")
 						.font(.system(size: 9, weight: .semibold))
-					Text("\(breakCount) break\(breakCount == 1 ? "" : "s")")
+					Text(String(localized: "^\(breakCount) break(s)"))
 						.font(.system(size: 10, weight: .medium))
 				}
 				.foregroundStyle(.secondary)
@@ -197,6 +221,204 @@ struct HistoryRowView: View {
 			: String(localized: "Mark as registered"))
 	}
 }
+
+// MARK: - WorkDayDetailInlineView
+
+struct WorkDayDetailInlineView: View {
+	let workDay: WorkDay
+	let summary: DailySummary?
+
+	@State private var isSessionsExpanded: Bool = false
+
+	var body: some View {
+		VStack(alignment: .leading, spacing: 14) {
+			// Stats grid
+			LazyVGrid(
+				columns: [
+					GridItem(.flexible(), spacing: 8),
+					GridItem(.flexible(), spacing: 8)
+				],
+				spacing: 8
+			) {
+				DetailStatCard(
+					title: String(localized: "Worked"),
+					value: (summary?.workedSeconds() ?? 0.0).formattedHoursMinutes,
+					icon: "clock.fill",
+					color: .blue
+				)
+				DetailStatCard(
+					title: String(localized: "Target"),
+					value: (workDay.targetHours * 3600).formattedHoursMinutes,
+					icon: "target",
+					color: .orange
+				)
+				DetailStatCard(
+					title: String(localized: "Breaks"),
+					value: "\(summary?.breakCount ?? 0)",
+					icon: "cup.and.saucer.fill",
+					color: .purple
+				)
+				DetailStatCard(
+					title: String(localized: "Break Time"),
+					value: (summary?.breakSeconds() ?? 0.0).formattedHoursMinutes,
+					icon: "pause.circle.fill",
+					color: .teal
+				)
+			}
+
+			// Sessions section
+			if let sessions = summary?.sessions, !sessions.isEmpty {
+				VStack(alignment: .leading, spacing: 8) {
+					HStack(spacing: 6) {
+						Image(systemName: "list.bullet")
+							.font(.system(size: 10, weight: .semibold))
+							.foregroundStyle(.blue)
+
+						Text(String(localized: "Sessions"))
+							.font(.system(size: 10, weight: .semibold))
+							.foregroundStyle(.secondary)
+							.textCase(.uppercase)
+							.tracking(0.5)
+					}
+
+					VStack(spacing: 6) {
+						let displayedSessions = isSessionsExpanded ? sessions : Array(sessions.prefix(3))
+
+						ForEach(displayedSessions) { session in
+							HStack(spacing: 8) {
+								Image(systemName: "play.circle.fill")
+									.foregroundStyle(.green)
+									.font(.system(size: 10, weight: .semibold))
+
+								Text(session.startedAt.formatted(.dateTime.hour().minute()))
+									.font(.system(size: 11, weight: .medium))
+									.monospacedDigit()
+
+								Image(systemName: "arrow.right")
+									.font(.system(size: 9, weight: .semibold))
+									.foregroundStyle(.secondary)
+
+								if let endedAt = session.endedAt {
+									Text(endedAt.formatted(.dateTime.hour().minute()))
+										.font(.system(size: 11, weight: .medium))
+										.monospacedDigit()
+								} else {
+									Text(String(localized: "Active"))
+										.font(.system(size: 10, weight: .medium))
+										.foregroundStyle(.green)
+								}
+
+								Spacer()
+
+								let duration = (session.endedAt ?? .now).timeIntervalSince(session.startedAt)
+								Text(duration.formattedHoursMinutes)
+									.font(.system(size: 11, weight: .semibold))
+									.monospacedDigit()
+									.foregroundStyle(.secondary)
+							}
+							.padding(.horizontal, 10)
+							.padding(.vertical, 8)
+							.background {
+								RoundedRectangle(cornerRadius: 8, style: .continuous)
+									.fill(Color.white.opacity(0.03))
+									.overlay {
+										RoundedRectangle(cornerRadius: 8, style: .continuous)
+											.strokeBorder(Color.white.opacity(0.06), lineWidth: 1)
+									}
+							}
+						}
+
+						if sessions.count > 3 {
+							Button {
+								withAnimation(.smooth) {
+									isSessionsExpanded.toggle()
+								}
+							} label: {
+								HStack(spacing: 4) {
+									Text(isSessionsExpanded
+										? String(localized: "Show less")
+										: String(localized: "Show \(sessions.count - 3) more...")
+									)
+									.font(.system(size: 10, weight: .medium))
+
+									Image(systemName: isSessionsExpanded ? "chevron.up" : "chevron.down")
+										.font(.system(size: 8, weight: .semibold))
+								}
+								.foregroundStyle(.blue)
+								.frame(maxWidth: .infinity)
+								.padding(.vertical, 8)
+								.padding(.horizontal, 12)
+								.contentShape(Rectangle())
+							}
+							.buttonStyle(.plain)
+							.padding(.top, 2)
+						}
+					}
+					.animation(.smooth, value: isSessionsExpanded)
+				}
+			}
+		}
+		.padding(14)
+		.background {
+			RoundedRectangle(cornerRadius: 12, style: .continuous)
+				.fill(Color(white: 0.05))
+				.overlay {
+					RoundedRectangle(cornerRadius: 12, style: .continuous)
+						.strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
+				}
+		}
+		.padding(.top, 8)
+	}
+}
+
+// MARK: - DetailStatCard
+
+struct DetailStatCard: View {
+	let title: String
+	let value: String
+	let icon: String
+	let color: Color
+
+	var body: some View {
+		VStack(alignment: .leading, spacing: 6) {
+			HStack(spacing: 6) {
+				ZStack {
+					RoundedRectangle(cornerRadius: 6)
+						.fill(color.opacity(0.15))
+						.frame(width: 22, height: 22)
+					Image(systemName: icon)
+						.font(.system(size: 10, weight: .semibold))
+						.foregroundStyle(color)
+				}
+
+				Text(title)
+					.font(.system(size: 10, weight: .medium))
+					.foregroundStyle(.secondary)
+			}
+
+			Text(value)
+				.font(.system(size: 14, weight: .bold, design: .rounded))
+				.monospacedDigit()
+		}
+		.frame(maxWidth: .infinity, alignment: .leading)
+		.padding(10)
+		.background {
+			RoundedRectangle(cornerRadius: 10, style: .continuous)
+				.fill(.ultraThinMaterial)
+				.opacity(0.3)
+				.background(
+					RoundedRectangle(cornerRadius: 10, style: .continuous)
+						.fill(Color.white.opacity(0.02))
+				)
+				.overlay {
+					RoundedRectangle(cornerRadius: 10, style: .continuous)
+						.strokeBorder(Color.white.opacity(0.08), lineWidth: 1)
+				}
+		}
+	}
+}
+
+// MARK: - Preview
 
 #Preview {
 	HistoryView()
