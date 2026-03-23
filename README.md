@@ -1,7 +1,3 @@
-<p align="center">
-  <img src=".github/assets/icon.png" width="128" height="128" alt="worK app icon" />
-</p>
-
 <h1 align="center">worK</h1>
 
 <p align="center">
@@ -30,6 +26,8 @@
 
 <p align="center">
   <img src=".github/assets/dashboard-screenshot.png" width="380" alt="worK Dashboard - glass-morphic popover showing progress circle, stats cards, and AI motivational message" />
+  &nbsp;&nbsp;
+  <img src=".github/assets/take-a-break.png" width="380" alt="worK Dashboard with AI motivational message" />
 </p>
 
 <p align="center">
@@ -62,7 +60,7 @@ Screen locked    -->  On Break (auto-pause)
 A single button locks your screen and starts a break timer. When you return and unlock, work resumes seamlessly.
 
 <p align="center">
-  <img src=".github/assets/take-a-break.png" width="380" alt="Take a Break button with orange gradient styling" />
+  <img src=".github/assets/dashboard-red.png" width="380" alt="worK dashboard showing early day progress in red" />
 </p>
 
 ### Glass-Morphic Dashboard
@@ -75,7 +73,13 @@ The popover interface features a Control Center-inspired design with:
 - **Color-coded status bar** -- Green (on track), yellow (behind), red (just started), gray (idle)
 
 <p align="center">
-  <img src=".github/assets/tabs-overview.png" width="760" alt="All four tabs: Dashboard, Charts, History, and Settings" />
+  <img src=".github/assets/dashboard-screenshot.png" width="185" alt="Dashboard tab" />
+  &nbsp;
+  <img src=".github/assets/chart-screenshot.png" width="185" alt="Charts tab" />
+  &nbsp;
+  <img src=".github/assets/history-screenshot.png" width="185" alt="History tab" />
+  &nbsp;
+  <img src=".github/assets/settings-screenshot.png" width="185" alt="Settings tab" />
 </p>
 
 <p align="center">
@@ -104,18 +108,27 @@ Browse past work days with detailed breakdowns of each session, including start 
 
 ### Download
 
-Download the latest `.dmg` from the [Releases](https://github.com/jonathapereiralima/worK/releases) page.
+Download the latest `.dmg` from the [Releases](https://github.com/jonathalimax/worK/releases) page.
 
 1. Open `worK-1.0.0.dmg`
 2. Drag **worK** to your Applications folder
 3. Launch worK from Applications
 4. The app appears in your menu bar -- no dock icon
 
-### Homebrew (coming soon)
+### Homebrew
 
 ```bash
+brew tap jonathalimax/tap
 brew install --cask work
 ```
+
+Or install directly without adding the tap:
+
+```bash
+brew install --cask jonathalimax/tap/work
+```
+
+> **Setup your tap:** The cask formula is at [`.github/homebrew/work.rb`](.github/homebrew/work.rb). To publish it, create a GitHub repository named `homebrew-tap` at `github.com/jonathalimax/homebrew-tap`, add a `Casks/` folder, and place `work.rb` inside it. The commands above will then work once a [GitHub Release](https://github.com/jonathalimax/worK/releases) with the `worK-1.0.0.dmg` asset exists.
 
 ## How It Works
 
@@ -245,7 +258,7 @@ worK/
 
 ```bash
 # Clone the repository
-git clone https://github.com/jonathapereiralima/worK.git
+git clone https://github.com/jonathalimax/worK.git
 cd worK
 
 # Open in Xcode and run
@@ -310,7 +323,7 @@ Contributions are welcome. Here's how to get started:
 - [ ] **Focus integration** -- Tie into macOS Focus modes
 - [ ] **Pomodoro mode** -- Optional structured work/break intervals
 - [ ] **Localization** -- Multi-language support
-- [ ] **Homebrew distribution** -- `brew install --cask work`
+- [x] **Homebrew distribution** -- `brew install --cask work` (via `jonathalimax/tap`)
 
 ## Acknowledgments
 
