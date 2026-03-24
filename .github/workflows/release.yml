@@ -84,23 +84,39 @@ jobs:
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
-          # Write private key to file so generate_appcast can sign
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          DOWNLOAD_URL="https://github.com/jonathalimax/worK/releases/download/v${VERSION}/worK.zip"
+          DATE=$(date -u +"%a, %d %b %Y %H:%M:%S +0000")
+
+          # Sign the zip with EdDSA key — outputs: sparkle:edSignature="..." length="..."
           echo "$SPARKLE_PRIVATE_KEY" > sparkle_key.txt
-
-          # Put the zip in an isolated folder so generate_appcast doesn't
-          # pick up sparkle.tar.xz or other bundles in the working directory
-          mkdir -p appcast_input
-          cp worK.zip appcast_input/
-
-          ./bin/generate_appcast appcast_input/ \
-            -f sparkle_key.txt \
-            --download-url-prefix "https://github.com/jonathalimax/worK/releases/download/v${{ steps.version.outputs.VERSION }}/" \
-            -o appcast.xml
-
+          SIGNATURE=$(./bin/sign_update worK.zip -f sparkle_key.txt)
           rm sparkle_key.txt
+
+          cat > appcast.xml << EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <channel>
+              <title>worK Changelog</title>
+              <link>https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml</link>
+              <description>Most recent changes for worK</description>
+              <language>en</language>
+              <item>
+                <title>Version ${VERSION}</title>
+                <link>https://github.com/jonathalimax/worK/releases</link>
+                <sparkle:version>${VERSION}</sparkle:version>
+                <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
+                <pubDate>${DATE}</pubDate>
+                <enclosure url="${DOWNLOAD_URL}"
+                           type="application/octet-stream"
+                           ${SIGNATURE} />
+              </item>
+            </channel>
+          </rss>
+          EOF
 
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add appcast.xml
-          git commit -m "Update appcast for version ${{ steps.version.outputs.VERSION }}" || echo "No changes to appcast"
+          git commit -m "Update appcast for version ${VERSION}" || echo "No changes to appcast"
           git push origin HEAD:main || echo "Failed to push appcast update"
