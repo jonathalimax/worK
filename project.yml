@@ -82,6 +82,11 @@ targets:
       base:
         GENERATE_INFOPLIST_FILE: true
         INFOPLIST_KEY_LSUIElement: true
+        INFOPLIST_KEY_LSMinimumSystemVersion: "15.0"
+        INFOPLIST_KEY_SUFeedURL: https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml
+        INFOPLIST_KEY_SUEnableAutomaticChecks: true
+        INFOPLIST_KEY_SUScheduledCheckInterval: 14400
+        INFOPLIST_KEY_SUPublicEDKey: zo5OnsZEq1EA2kpxCEHbB2vLzsNu3Ry6FNFctK7BZhg=
     dependencies:
       - package: sqlite-data
         product: SQLiteData
