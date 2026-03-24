@@ -65,15 +65,6 @@ jobs:
           chmod +x bin/generate_appcast
           chmod +x bin/sign_update
 
-      - name: Sign Update with EdDSA
-        env:
-          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
-        run: |
-          echo "$SPARKLE_PRIVATE_KEY" > sparkle_key.txt
-          SIGNATURE=$(./bin/sign_update worK.zip -f sparkle_key.txt)
-          echo "SPARKLE_SIGNATURE=$SIGNATURE" >> $GITHUB_ENV
-          rm sparkle_key.txt
-
       - name: Get Version
         id: version
         run: |
@@ -90,11 +81,24 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update Appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
-          # Generate appcast using Sparkle's tool
-          ./bin/generate_appcast ./
+          # Write private key to file so generate_appcast can sign
+          echo "$SPARKLE_PRIVATE_KEY" > sparkle_key.txt
 
-          # Commit and push updated appcast.xml
+          # Put the zip in an isolated folder so generate_appcast doesn't
+          # pick up sparkle.tar.xz or other bundles in the working directory
+          mkdir -p appcast_input
+          cp worK.zip appcast_input/
+
+          ./bin/generate_appcast appcast_input/ \
+            -f sparkle_key.txt \
+            --download-url-prefix "https://github.com/jonathalimax/worK/releases/download/v${{ steps.version.outputs.VERSION }}/" \
+            -o appcast.xml
+
+          rm sparkle_key.txt
+
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add appcast.xml
