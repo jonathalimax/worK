@@ -61,6 +61,7 @@ jobs:
           chmod +x bin/sign_update
 
       - name: Sign Update with EdDSA
+        if: ${{ secrets.SPARKLE_PRIVATE_KEY != '' }}
         env:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
