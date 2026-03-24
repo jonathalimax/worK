@@ -27,11 +27,15 @@ jobs:
       - name: Resolve Swift Package Dependencies
         run: xcodebuild -resolvePackageDependencies -scheme worK
 
+      - name: Trust Swift Macros
+        run: defaults write com.apple.dt.Xcode IDESkipMacroFingerprintValidation -bool YES
+
       - name: Build Release
         run: |
           xcodebuild -scheme worK \
             -configuration Release \
             -archivePath build/worK.xcarchive \
+            -skipMacroValidation \
             archive \
             CODE_SIGN_IDENTITY="" \
             CODE_SIGNING_REQUIRED=NO \
