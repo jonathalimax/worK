@@ -52,7 +52,6 @@ final class StatusBarController {
 
 	private func configureButton() {
 		guard let button = statusItem.button else { return }
-		button.title = AppConstants.appName
 		button.font = .monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize, weight: .medium)
 		button.target = self
 		button.action = #selector(togglePopover)

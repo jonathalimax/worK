@@ -13,6 +13,7 @@ struct PopoverContentView: View {
 
 	var body: some View {
 		VStack(spacing: 0) {
+			appHeader
 			tabBar
 			tabContent
 		}
@@ -21,6 +22,27 @@ struct PopoverContentView: View {
 			height: AppConstants.popoverHeight
 		)
 		.background(.ultraThinMaterial)
+	}
+
+	// MARK: - App Header
+
+	private var appHeader: some View {
+		HStack(spacing: 8) {
+			Image("AppLogo")
+				.resizable()
+				.interpolation(.high)
+				.frame(width: 24, height: 24)
+				.clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+
+			Text(AppConstants.appName)
+				.font(.system(size: 13, weight: .semibold))
+				.foregroundStyle(.primary)
+
+			Spacer()
+		}
+		.padding(.horizontal, 16)
+		.padding(.top, 14)
+		.padding(.bottom, 4)
 	}
 
 	// MARK: - Tab Bar
