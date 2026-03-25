@@ -409,17 +409,6 @@ struct SettingsView: View {
 				Divider()
 					.background(Color.white.opacity(0.08))
 
-				HStack {
-					Text(String(localized: "Build"))
-						.font(.system(size: 13, weight: .medium))
-					Spacer()
-					Text(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1")
-						.font(.system(size: 13, weight: .semibold))
-						.foregroundStyle(.secondary)
-				}
-
-				Divider()
-					.background(Color.white.opacity(0.08))
 
 				Button {
 					@Dependency(\.updateClient) var updateClient
