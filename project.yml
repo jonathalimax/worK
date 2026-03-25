@@ -18,7 +18,7 @@ settings:
     MACOSX_DEPLOYMENT_TARGET: "15.0"
     PRODUCT_BUNDLE_IDENTIFIER: com.worK.app
     MARKETING_VERSION: "1.2.0"
-    CURRENT_PROJECT_VERSION: "3"
+    CURRENT_PROJECT_VERSION: "1.2.0"
     INFOPLIST_KEY_LSUIElement: true
     INFOPLIST_KEY_LSMinimumSystemVersion: "15.0"
     INFOPLIST_KEY_SUFeedURL: https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml
