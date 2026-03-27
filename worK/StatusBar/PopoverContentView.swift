@@ -1,4 +1,5 @@
 import Charts
+import Dependencies
 import SwiftUI
 
 // MARK: - PopoverContentView
@@ -10,6 +11,7 @@ struct PopoverContentView: View {
 	@State private var chartViewModel = MonthlyChartViewModel()
 	@State private var historyViewModel = HistoryViewModel()
 	@State private var expandedWorkDayID: UUID?
+	@Dependency(\.analyticsClient) private var analytics
 
 	private var selectedTab: PopoverTab {
 		get { popoverState.selectedTab }
@@ -29,6 +31,12 @@ struct PopoverContentView: View {
 		.background(.ultraThinMaterial)
 		.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
 		.shadow(color: .black.opacity(0.35), radius: 24, y: 8)
+		.onAppear {
+			analytics.track(.tabViewed(selectedTab))
+		}
+		.onChange(of: popoverState.selectedTab) { _, newTab in
+			analytics.track(.tabViewed(newTab))
+		}
 	}
 
 	// MARK: - App Header
@@ -179,6 +187,7 @@ struct PopoverContentView: View {
 
 			HStack(spacing: 8) {
 				Button {
+					analytics.track(.chartMonthNavigated(.previous))
 					Task {
 						await chartViewModel.navigateToPreviousMonth()
 					}
@@ -197,6 +206,7 @@ struct PopoverContentView: View {
 				.disabled(!chartViewModel.canNavigatePrevious)
 
 				Button {
+					analytics.track(.chartMonthNavigated(.next))
 					Task {
 						await chartViewModel.navigateToNextMonth()
 					}
@@ -375,9 +385,11 @@ struct PopoverContentView: View {
 								summary: historyViewModel.summary(for: workDay),
 								isExpanded: expandedWorkDayID == workDay.id,
 								onToggleRegistered: {
+									analytics.track(.historyRegisteredToggled(!workDay.isRegistered))
 									Task { await historyViewModel.toggleRegistered(for: workDay.id) }
 								},
 								onTap: {
+									analytics.track(.historyItemExpanded)
 									withAnimation(.smooth(duration: 0.3)) {
 										expandedWorkDayID = expandedWorkDayID == workDay.id ? nil : workDay.id
 									}
