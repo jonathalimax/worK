@@ -100,6 +100,7 @@
 		F3BDCEF114E57E0FA11E27BA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5777C4086D5E79C5CA328 /* ReminderService.swift */; };
 		F9705F20E9CA6ED65175E948 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = A2862382529A29F66C792B6F /* Sparkle */; };
+		TD1A2B3C4D5E6F7A8B9C0D1E /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */; };
 		FAF473792CED791FC6AAFE78 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66408F80229E2B939BA89008 /* ServiceManagement.framework */; };
 		FBD7A7E355F46B417BA86584 /* StatsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0DC546DC1EE9C3593A4F8 /* StatsCardView.swift */; };
 		FE5A254CF0F8D9A9CDFFA894 /* AIMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */; };
@@ -184,6 +185,7 @@
 				E9963F72E0EA85CF63DB8A43 /* Lottie in Frameworks */,
 				7DF59835438609FB51DA82D7 /* ServiceManagement.framework in Frameworks */,
 				D67532B13072ABBBC1F23009 /* AppKit.framework in Frameworks */,
+				TD1A2B3C4D5E6F7A8B9C0D1E /* TelemetryDeck in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +455,7 @@
 				0B1983D4E8C517352BF8FD57 /* DependenciesMacros */,
 				A2862382529A29F66C792B6F /* Sparkle */,
 				AC580F9ED45C61443270A082 /* Lottie */,
+				TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */,
 			);
 			productName = worK;
 			productReference = D59458FEBF47CE31B8428F72 /* worK.app */;
@@ -509,6 +512,7 @@
 				C6D00376EEC49891111B1416 /* XCRemoteSwiftPackageReference "sqlite-data" */,
 				3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				7EF8FF6F3A784524EDC0C8BC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */,
 			);
 			projectDirPath = "";
 			projectRoot = "";
@@ -889,6 +893,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftSDK";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
@@ -976,6 +988,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
+		};
+		TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */;
+			productName = TelemetryDeck;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
