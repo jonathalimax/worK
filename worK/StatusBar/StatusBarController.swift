@@ -2,6 +2,14 @@ import AppKit
 import Observation
 import SwiftUI
 
+// MARK: - PopoverState
+
+@Observable
+@MainActor
+final class PopoverState {
+	var selectedTab: PopoverTab = .dashboard
+}
+
 // MARK: - StatusBarController
 
 @MainActor
@@ -9,28 +17,19 @@ final class StatusBarController {
 	// MARK: - Properties
 
 	private let statusItem: NSStatusItem
-	private let popover: NSPopover
+	private var panel: NSPanel?
 	let viewModel: WorkDayViewModel
+	private let popoverState = PopoverState()
 	private var observationTask: Task<Void, Never>?
 	private var eventMonitor: Any?
+
+	var isPanelShown: Bool { panel != nil }
 
 	// MARK: - Initialization
 
 	init() {
 		viewModel = WorkDayViewModel()
-
 		statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-		popover = NSPopover()
-
-		popover.contentSize = NSSize(
-			width: AppConstants.popoverWidth,
-			height: AppConstants.popoverHeight
-		)
-		popover.behavior = .transient
-		popover.animates = true
-
-		let contentView = PopoverContentView(viewModel: viewModel)
-		popover.contentViewController = NSHostingController(rootView: contentView)
 
 		configureButton()
 		startObserving()
@@ -46,6 +45,7 @@ final class StatusBarController {
 			NSEvent.removeMonitor(monitor)
 			eventMonitor = nil
 		}
+		dismissPanel()
 	}
 
 	// MARK: - Configuration
@@ -54,13 +54,37 @@ final class StatusBarController {
 		guard let button = statusItem.button else { return }
 		button.font = .monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize, weight: .medium)
 		button.target = self
-		button.action = #selector(togglePopover)
+		button.action = #selector(handleButtonClick)
+		button.sendAction(on: [.leftMouseUp, .rightMouseUp])
 
-		// Add global event monitor to close popover on outside clicks
+		// Dismiss panel on outside clicks
 		eventMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown]) { [weak self] _ in
-			guard let self, self.popover.isShown else { return }
-			self.popover.performClose(nil)
+			guard let self, self.isPanelShown else { return }
+			self.dismissPanel()
 		}
+	}
+
+	private func makeContextMenu() -> NSMenu {
+		let menu = NSMenu()
+
+		let todayItem = NSMenuItem(title: String(localized: "Today Summary"), action: #selector(openToday), keyEquivalent: "")
+		todayItem.target = self
+		menu.addItem(todayItem)
+
+		let historyItem = NSMenuItem(title: String(localized: "History"), action: #selector(openHistory), keyEquivalent: "")
+		historyItem.target = self
+		menu.addItem(historyItem)
+
+		let settingsItem = NSMenuItem(title: String(localized: "Settings"), action: #selector(openSettings), keyEquivalent: ",")
+		settingsItem.target = self
+		menu.addItem(settingsItem)
+
+		menu.addItem(.separator())
+
+		let quitItem = NSMenuItem(title: String(localized: "Quit worK"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+		menu.addItem(quitItem)
+
+		return menu
 	}
 
 	// MARK: - Observation
@@ -85,8 +109,6 @@ final class StatusBarController {
 	private func updateButton(text: String, color: StatusBarColor) {
 		guard let button = statusItem.button else { return }
 
-		// Map status bar color to text color and optional tint
-		// For .gray (idle), use systemGray text with no tint for visibility
 		let (textColor, tintColor): (NSColor, NSColor?) = switch color {
 		case .green:
 			(.white, .systemGreen)
@@ -95,7 +117,7 @@ final class StatusBarController {
 		case .red:
 			(.white, .systemRed)
 		case .gray:
-			(.systemGray, nil)  // Gray text, no background tint
+			(.systemGray, nil)
 		}
 
 		let attributes: [NSAttributedString.Key: Any] = [
@@ -107,26 +129,107 @@ final class StatusBarController {
 		button.contentTintColor = tintColor
 	}
 
+	// MARK: - Panel
+
+	private func showPanel() {
+		guard let button = statusItem.button,
+		      let buttonWindow = button.window else { return }
+
+		let panel = NSPanel(
+            contentRect: NSRect(x: 0, y: 0, width: AppConstants.popoverWidth, height: AppConstants.popoverHeight),
+			styleMask: [.borderless, .nonactivatingPanel],
+			backing: .buffered,
+			defer: false
+		)
+
+		panel.isFloatingPanel = true
+		panel.level = .popUpMenu
+		panel.backgroundColor = .clear
+		panel.isOpaque = false
+		panel.hasShadow = false
+		panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+
+		let contentView = PopoverContentView(viewModel: viewModel, popoverState: popoverState)
+		let hostingView = NSHostingView(rootView: contentView)
+		hostingView.wantsLayer = true
+		hostingView.layer?.backgroundColor = NSColor.clear.cgColor
+		panel.contentView = hostingView
+
+		// Position below the status bar button
+		let buttonFrame = buttonWindow.convertToScreen(button.convert(button.bounds, to: nil))
+		let originX = buttonFrame.midX - AppConstants.popoverWidth / 2
+		let originY = buttonFrame.minY - AppConstants.popoverHeight - 4
+		panel.setFrameOrigin(NSPoint(x: originX, y: originY))
+
+		panel.alphaValue = 0
+		panel.orderFront(nil)
+
+		NSAnimationContext.runAnimationGroup { context in
+			context.duration = 0.2
+			context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+			panel.animator().alphaValue = 1
+		}
+
+		self.panel = panel
+
+		Task { @MainActor [weak self] in
+			await self?.viewModel.refreshStats()
+		}
+	}
+
+	private func dismissPanel() {
+		guard let panel else { return }
+
+		NSAnimationContext.runAnimationGroup({ context in
+			context.duration = 0.15
+			context.timingFunction = CAMediaTimingFunction(name: .easeIn)
+			panel.animator().alphaValue = 0
+		}, completionHandler: { [weak self] in
+			MainActor.assumeIsolated {
+				panel.orderOut(nil)
+				self?.panel = nil
+			}
+		})
+	}
+
 	// MARK: - Actions
 
-	@objc private func togglePopover() {
-		if popover.isShown {
-			popover.performClose(nil)
+	@objc private func openToday() {
+		popoverState.selectedTab = .dashboard
+		if !isPanelShown { showPanel() }
+	}
+
+	@objc private func openHistory() {
+		popoverState.selectedTab = .history
+		if !isPanelShown { showPanel() }
+	}
+
+	@objc private func openSettings() {
+		popoverState.selectedTab = .settings
+		if !isPanelShown { showPanel() }
+	}
+
+	@objc private func handleButtonClick() {
+		guard let event = NSApp.currentEvent else { return }
+		if event.type == .rightMouseUp {
+			showContextMenu()
 		} else {
-			guard let button = statusItem.button else { return }
+			togglePopover()
+		}
+	}
 
-			// Recalculate size in case screen changed
-			popover.contentSize = NSSize(
-				width: AppConstants.popoverWidth,
-				height: AppConstants.popoverHeight
-			)
+	private func showContextMenu() {
+		dismissPanel()
+		statusItem.menu = makeContextMenu()
+		statusItem.button?.performClick(nil)
+		statusItem.menu = nil
+	}
 
-			popover.show(relativeTo: button.bounds, of: button, preferredEdge: .minY)
-
-			// Ensure the popover content refreshes
-			Task { @MainActor [weak self] in
-				await self?.viewModel.refreshStats()
-			}
+	private func togglePopover() {
+		if isPanelShown {
+			dismissPanel()
+		} else {
+			showPanel()
 		}
 	}
 }

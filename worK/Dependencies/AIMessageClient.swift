@@ -34,7 +34,7 @@ extension AIMessageClient: DependencyKey {
 				do {
 					let session = LanguageModelSession()
 					let prompt: String
-                    let languageName = Locale.current.localizedString(forLanguageCode: Locale.current.languageCode ?? "en") ?? "English"
+                    let languageName = Locale.current.localizedString(forLanguageCode: Locale.current.language.languageCode?.identifier ?? "en") ?? "English"
 
 					switch type {
 					case .motivational:

@@ -5,11 +5,16 @@ import SwiftUI
 
 struct PopoverContentView: View {
 	let viewModel: WorkDayViewModel
+	let popoverState: PopoverState
 
-	@State private var selectedTab: PopoverTab = .dashboard
 	@State private var chartViewModel = MonthlyChartViewModel()
 	@State private var historyViewModel = HistoryViewModel()
 	@State private var expandedWorkDayID: UUID?
+
+	private var selectedTab: PopoverTab {
+		get { popoverState.selectedTab }
+		nonmutating set { popoverState.selectedTab = newValue }
+	}
 
 	var body: some View {
 		VStack(spacing: 0) {
@@ -22,6 +27,8 @@ struct PopoverContentView: View {
 			height: AppConstants.popoverHeight
 		)
 		.background(.ultraThinMaterial)
+		.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+		.shadow(color: .black.opacity(0.35), radius: 24, y: 8)
 	}
 
 	// MARK: - App Header
@@ -110,15 +117,23 @@ struct PopoverContentView: View {
 	// MARK: - Tab Content
 
 	@ViewBuilder
+	private var currentTabContent: some View {
+		switch selectedTab {
+		case .dashboard:
+			DashboardView(viewModel: viewModel)
+		case .history:
+			combinedHistoryChartView
+		case .settings:
+			SettingsView(viewModel: viewModel)
+		}
+	}
+
+	@ViewBuilder
 	private var tabContent: some View {
-		ScrollView(showsIndicators: false) {
-			switch selectedTab {
-			case .dashboard:
-				DashboardView(viewModel: viewModel)
-			case .history:
-				combinedHistoryChartView
-			case .settings:
-				SettingsView(viewModel: viewModel)
+		ViewThatFits(in: .vertical) {
+			currentTabContent
+			ScrollView(showsIndicators: false) {
+				currentTabContent
 			}
 		}
 		.frame(maxWidth: .infinity, maxHeight: .infinity)

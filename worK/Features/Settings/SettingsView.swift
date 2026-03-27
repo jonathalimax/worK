@@ -21,9 +21,9 @@ struct SettingsView: View {
 
 	var body: some View {
 		VStack(alignment: .leading, spacing: 16) {
+			generalSection
 			workSection
 			remindersSection
-			generalSection
 			supportSection
 			aboutSection
 			quitButton

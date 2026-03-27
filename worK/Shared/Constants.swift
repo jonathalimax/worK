@@ -17,10 +17,7 @@ enum AppConstants {
 	// Auto-Update
 	static let appcastURL = "https://raw.githubusercontent.com/jonathalimax/worK/main/appcast.xml"
 
-	// MARK: - Popover Height
-
-	/// Popover height - reasonable fixed height with scrollable content
-	static let popoverHeight: CGFloat = 750
+	static let popoverHeight: CGFloat = 780
 
 	enum UserDefaultsKeys {
 		static let targetHours = "targetHours"

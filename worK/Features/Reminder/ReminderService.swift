@@ -47,6 +47,13 @@ final class ReminderService {
 		panelController.dismiss()
 	}
 
+	/// Resets the reminder countdown. Call when work resumes after a break so the
+	/// timer starts fresh from the configured interval.
+	func resetTimer() {
+		guard let viewModel else { return }
+		startMonitoring(viewModel: viewModel)
+	}
+
 	// MARK: - Private Helpers
 
 	private func checkAndShowReminder() async {

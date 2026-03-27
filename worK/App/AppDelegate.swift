@@ -24,6 +24,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		let service = ReminderService()
 		service.startMonitoring(viewModel: controller.viewModel)
 		reminderService = service
+
+		// Reset reminder timer whenever work resumes after a break
+		controller.viewModel.onWorkResumed = { [weak service] in
+			service?.resetTimer()
+		}
 	}
 
 	@MainActor

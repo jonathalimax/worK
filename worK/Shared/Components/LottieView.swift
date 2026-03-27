@@ -28,8 +28,7 @@ struct LottieView: NSViewRepresentable {
 		animationView.animationSpeed = animationSpeed
 		animationView.backgroundBehavior = .pauseAndRestore
 
-		// Load animation from bundle - use named resource for proper macOS loading
-		if let animation = LottieAnimation.named(animationName, subdirectory: "Animations") {
+		if let animation = loadAnimation() {
 			animationView.animation = animation
 			animationView.play()
 		} else {
@@ -40,12 +39,22 @@ struct LottieView: NSViewRepresentable {
 	}
 
 	func updateNSView(_ nsView: LottieAnimationView, context: Context) {
-		// Update animation if needed - only reload if animation is nil
-		if nsView.animation == nil,
-		   let animation = LottieAnimation.named(animationName, subdirectory: "Animations") {
+		if nsView.animation == nil, let animation = loadAnimation() {
 			nsView.animation = animation
 			nsView.play()
 		}
+	}
+
+	private func loadAnimation() -> LottieAnimation? {
+		// Try with Animations subdirectory (folder reference in bundle)
+		if let url = Bundle.main.url(forResource: animationName, withExtension: "json", subdirectory: "Animations") {
+			return LottieAnimation.filepath(url.path)
+		}
+		// Fallback: files may be flattened at bundle root (group folder in Xcode)
+		if let url = Bundle.main.url(forResource: animationName, withExtension: "json") {
+			return LottieAnimation.filepath(url.path)
+		}
+		return nil
 	}
 }
 

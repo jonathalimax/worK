@@ -79,8 +79,10 @@ final class ReminderPanelController {
 			context.timingFunction = CAMediaTimingFunction(name: .easeIn)
 			panel.animator().alphaValue = 0
 		}, completionHandler: { [weak self] in
-			panel.orderOut(nil)
-			self?.panel = nil
+			MainActor.assumeIsolated {
+				panel.orderOut(nil)
+				self?.panel = nil
+			}
 		})
 	}
 

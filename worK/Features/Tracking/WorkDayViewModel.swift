@@ -32,6 +32,11 @@ final class WorkDayViewModel {
 	var currentWorkDay: WorkDay?
 	var summary: DailySummary?
 
+	// MARK: - Callbacks
+
+	/// Called when work resumes (after a break or from idle). Use to reset external timers.
+	var onWorkResumed: (() -> Void)?
+
 	// MARK: - Private State
 
 	@ObservationIgnored private var timerTask: Task<Void, Never>?
@@ -81,6 +86,7 @@ final class WorkDayViewModel {
 			try database.startWorkSession(workDayId: workDay.id, at: now)
 
 			trackingState = .working
+			onWorkResumed?()
 			await refreshStats()
 		} catch {
 			print("Failed to start work: \(error)")
@@ -227,6 +233,7 @@ final class WorkDayViewModel {
 				// Start new work session
 				try database.startWorkSession(workDayId: workDay.id, at: now)
 				trackingState = .working
+				onWorkResumed?()
 				print("✅ Work session started, state set to .working")
 			}
 
