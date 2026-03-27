@@ -1,4 +1,5 @@
 import AppKit
+import Dependencies
 import Observation
 import SwiftUI
 
@@ -15,6 +16,9 @@ final class PopoverState {
 @MainActor
 final class StatusBarController {
 	// MARK: - Properties
+
+	@ObservationIgnored @Dependency(\.analyticsClient) private var analytics
+	private var panelSource: PopoverSource = .leftClick
 
 	private let statusItem: NSStatusItem
 	private var panel: NSPanel?
@@ -81,7 +85,8 @@ final class StatusBarController {
 
 		menu.addItem(.separator())
 
-		let quitItem = NSMenuItem(title: String(localized: "Quit worK"), action: #selector(NSApplication.terminate(_:)), keyEquivalent: "q")
+		let quitItem = NSMenuItem(title: String(localized: "Quit worK"), action: #selector(openQuit), keyEquivalent: "q")
+		quitItem.target = self
 		menu.addItem(quitItem)
 
 		return menu
@@ -172,6 +177,8 @@ final class StatusBarController {
 
 		self.panel = panel
 
+		analytics.track(.popoverOpened(source: panelSource))
+
 		Task { @MainActor [weak self] in
 			await self?.viewModel.refreshStats()
 		}
@@ -179,6 +186,8 @@ final class StatusBarController {
 
 	private func dismissPanel() {
 		guard let panel else { return }
+
+		analytics.track(.popoverClosed)
 
 		NSAnimationContext.runAnimationGroup({ context in
 			context.duration = 0.15
@@ -195,18 +204,29 @@ final class StatusBarController {
 	// MARK: - Actions
 
 	@objc private func openToday() {
+		analytics.track(.menuTodayTapped)
+		panelSource = .menu
 		popoverState.selectedTab = .dashboard
 		if !isPanelShown { showPanel() }
 	}
 
 	@objc private func openHistory() {
+		analytics.track(.menuHistoryTapped)
+		panelSource = .menu
 		popoverState.selectedTab = .history
 		if !isPanelShown { showPanel() }
 	}
 
 	@objc private func openSettings() {
+		analytics.track(.menuSettingsTapped)
+		panelSource = .menu
 		popoverState.selectedTab = .settings
 		if !isPanelShown { showPanel() }
+	}
+
+	@objc private func openQuit() {
+		analytics.track(.menuQuitTapped)
+		NSApp.terminate(nil)
 	}
 
 	@objc private func handleButtonClick() {
@@ -229,6 +249,7 @@ final class StatusBarController {
 		if isPanelShown {
 			dismissPanel()
 		} else {
+			panelSource = .leftClick
 			showPanel()
 		}
 	}
