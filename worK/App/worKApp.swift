@@ -1,5 +1,6 @@
 import SQLiteData
 import SwiftUI
+import TelemetryDeck
 
 @main
 struct WorkApp: App {
@@ -13,6 +14,11 @@ struct WorkApp: App {
 				fatalError("Failed to initialize database: \(error)")
 			}
 		}
+		TelemetryDeck.initialize(
+			config: TelemetryManagerConfiguration(
+				appID: "562F4D05-44DA-41BF-B640-671ED4C1EBBE"
+			)
+		)
 	}
 
 	var body: some Scene {

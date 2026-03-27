@@ -16,6 +16,7 @@
 		0FCAF84054E5FEAEC62FF470 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860D3E802D426526A660A14 /* SettingsClient.swift */; };
 		25AE85A1947E40B781E8E142 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */; };
+		B9CFB1BA824E4E10A36A5B85 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */; };
 		11115E63BBA6A6C6C3A854CB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		11715A5E415896662F2CB25E /* WorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532000D87FCD51C74160ADD /* WorkDay.swift */; };
 		12748A9E8799247E9D5E43A2 /* TrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2472A5D516BCB2317E70E4 /* TrackingState.swift */; };
