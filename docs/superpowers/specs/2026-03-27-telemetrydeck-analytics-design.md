@@ -84,7 +84,7 @@ enum AnalyticsEvent {
     case appTerminated
 
     // Panel
-    case popoverOpened(source: String)      // "leftClick" | "menu"
+    case popoverOpened(source: PopoverSource)
     case popoverClosed
     case tabViewed(PopoverTab)
 
@@ -94,8 +94,8 @@ enum AnalyticsEvent {
     case workDayCompleted(hoursWorked: String)
 
     // Breaks
-    case breakStarted(source: String)       // "screenLock" | "manual"
-    case breakEnded(source: String)         // "screenUnlock" | "manual"
+    case breakStarted(source: BreakSource)
+    case breakEnded(source: BreakEndSource)
 
     // Reminders
     case reminderShown(workedTime: String)
@@ -114,8 +114,8 @@ enum AnalyticsEvent {
 
     // History & Charts
     case historyItemExpanded
-    case historyRegisteredToggled(value: String)    // "true" | "false"
-    case chartMonthNavigated(direction: String)     // "previous" | "next"
+    case historyRegisteredToggled(Bool)
+    case chartMonthNavigated(ChartDirection)
 
     // Support / About
     case supportGithubSponsorsTapped
@@ -142,7 +142,29 @@ enum SettingKey {
 
     var name: String { ... }
 }
+
+enum PopoverSource {
+    case leftClick
+    case menu
+}
+
+enum BreakSource {
+    case screenLock
+    case manual
+}
+
+enum BreakEndSource {
+    case screenUnlock
+    case manual
+}
+
+enum ChartDirection {
+    case previous
+    case next
+}
 ```
+
+All supporting enums live in `AnalyticsClient.swift` alongside `SettingKey`. Each has a `name: String` computed property used when building `parameters` for TelemetryDeck.
 
 ---
 
@@ -152,17 +174,17 @@ enum SettingKey {
 |---|---|---|
 | `appLaunched` | `AppDelegate.applicationDidFinishLaunching` | After `StatusBarController` init, SDK is guaranteed ready |
 | `appTerminated` | `AppDelegate.applicationWillTerminate` | |
-| `popoverOpened("leftClick")` | `StatusBarController.togglePopover()` | On the show branch |
-| `popoverOpened("menu")` | `StatusBarController.openToday/History/Settings()` | Before `showPanel()` |
+| `popoverOpened(.leftClick)` | `StatusBarController.togglePopover()` | On the show branch |
+| `popoverOpened(.menu)` | `StatusBarController.openToday/History/Settings()` | Before `showPanel()` |
 | `popoverClosed` | `StatusBarController.dismissPanel()` | |
 | `tabViewed` | `PopoverContentView` | `.onAppear` for initial tab + `.onChange(of: selectedTab)` |
 | `workStarted` | `WorkDayViewModel.startWork()` | After `trackingState = .working` |
 | `workStopped` | `WorkDayViewModel.stopWork()` | After `trackingState = .idle` |
 | `workDayCompleted` | `WorkDayViewModel.refreshStats()` AND `WorkDayViewModel.tick()` | Both places set `trackingState = .completed`; guard against double-fire with a flag |
-| `breakStarted("manual")` | `WorkDayViewModel.takeBreak()` | Fire before `screenLockClient.lockScreen()` — covers both success and fallback paths |
-| `breakStarted("screenLock")` | `WorkDayViewModel.handleScreenEvent(.locked)` | Only when not already tracking manually |
-| `breakEnded("screenUnlock")` | `WorkDayViewModel.handleScreenEvent(.unlocked)` | |
-| `breakEnded("manual")` | `WorkDayViewModel.startWork()` when called from `toggleWork()` | Differentiate by adding a `source` parameter to `startWork()`, or by tracking in `toggleWork()` directly |
+| `breakStarted(.manual)` | `WorkDayViewModel.takeBreak()` | Fire before `screenLockClient.lockScreen()` — covers both success and fallback paths |
+| `breakStarted(.screenLock)` | `WorkDayViewModel.handleScreenEvent(.locked)` | Only when not already tracking manually |
+| `breakEnded(.screenUnlock)` | `WorkDayViewModel.handleScreenEvent(.unlocked)` | |
+| `breakEnded(.manual)` | `WorkDayViewModel.startWork()` when called from `toggleWork()` | Differentiate by adding a `source` parameter to `startWork()`, or by tracking in `toggleWork()` directly |
 | `reminderShown` | `ReminderService.checkAndShowReminder()` | `workedTime` is already computed there |
 | `reminderDismissed` | `ReminderOverlayView` dismiss button action | |
 | `reminderTakeBreakTapped` | `ReminderOverlayView` take break button action | |
@@ -174,8 +196,8 @@ enum SettingKey {
 | `menuQuitTapped` | New `@objc openQuit()` method in `StatusBarController` | Replace direct `NSApplication.terminate` target; method fires event then calls `NSApp.terminate(nil)` |
 | `historyItemExpanded` | `PopoverContentView` — `onTap` closure in history list | |
 | `historyRegisteredToggled` | `PopoverContentView` — `onToggleRegistered` closure | |
-| `chartMonthNavigated("previous")` | `PopoverContentView` — prev month button | |
-| `chartMonthNavigated("next")` | `PopoverContentView` — next month button | |
+| `chartMonthNavigated(.previous)` | `PopoverContentView` — prev month button | |
+| `chartMonthNavigated(.next)` | `PopoverContentView` — next month button | |
 | `supportGithubSponsorsTapped` | `SettingsView` GitHub Sponsors button | |
 | `updatesCheckTapped` | `SettingsView` Check for Updates button | |
 | `aiMessageRefreshed` | `DashboardView` refresh button | |
