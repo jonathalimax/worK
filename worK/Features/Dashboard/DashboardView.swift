@@ -163,20 +163,13 @@ struct DashboardView: View {
 				}
 				.foregroundStyle(.secondary)
 			} else {
-				VStack(spacing: 8) {
-					LottieView(
-						animationName: "success",
-						loopMode: .playOnce,
-						animationSpeed: 1.5
-					)
-					.frame(width: 50, height: 50)
-
-					HStack(spacing: 6) {
-						Text(String(localized: "Target reached"))
-							.font(.system(size: 12, weight: .medium))
-					}
-					.foregroundStyle(.green)
+				HStack(spacing: 6) {
+					Image(systemName: "checkmark.circle.fill")
+						.font(.system(size: 12, weight: .semibold))
+					Text(String(localized: "Target reached"))
+						.font(.system(size: 12, weight: .medium))
 				}
+				.foregroundStyle(.green)
 			}
 		}
 	}
