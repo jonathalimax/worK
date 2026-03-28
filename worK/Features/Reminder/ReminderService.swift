@@ -1,6 +1,7 @@
 import Dependencies
 import Foundation
 import Observation
+import UserNotifications
 
 // MARK: - ReminderService
 
@@ -15,11 +16,8 @@ final class ReminderService {
 
 	// MARK: - Properties
 
-	private let panelController = ReminderPanelController()
 	private var monitoringTask: Task<Void, Never>?
 	private weak var viewModel: WorkDayViewModel?
-
-	var shouldShowReminder = false
 
 	// MARK: - Initialization
 
@@ -45,7 +43,6 @@ final class ReminderService {
 	func stopMonitoring() {
 		monitoringTask?.cancel()
 		monitoringTask = nil
-		panelController.dismiss()
 	}
 
 	/// Resets the reminder countdown. Call when work resumes after a break so the
@@ -62,14 +59,58 @@ final class ReminderService {
 		guard let viewModel, viewModel.trackingState == .working else { return }
 
 		let workedTime = viewModel.workedSeconds.formattedHoursMinutes
-
 		analytics.track(.reminderShown(workedTime: workedTime))
-		panelController.show(workedTime: workedTime) { [weak self] in
-			Task { @MainActor [weak self] in
-				guard let self, let viewModel = self.viewModel else { return }
-				// Simulate taking a break by stopping work
-				await viewModel.stopWork()
-			}
-		}
+
+		let (title, body) = BreakReminderMessages.random(workedTime: workedTime)
+
+		let content = UNMutableNotificationContent()
+		content.title = title
+		content.body = body
+		content.sound = .default
+		content.categoryIdentifier = "BREAK_REMINDER"
+
+		let request = UNNotificationRequest(
+			identifier: "break-reminder",
+			content: content,
+			trigger: nil
+		)
+
+		try? await UNUserNotificationCenter.current().add(request)
+	}
+}
+
+// MARK: - BreakReminderMessages
+
+private enum BreakReminderMessages {
+	private static let messages: [(String, String)] = [
+		(
+			String(localized: "Time for a break"),
+			String(localized: "You've been focused for {time}. Step away — you'll come back sharper.")
+		),
+		(
+			String(localized: "You've earned it"),
+			String(localized: "{time} of deep work. A short pause now pays off later.")
+		),
+		(
+			String(localized: "Rest is productive"),
+			String(localized: "After {time}, your brain needs a reset. Take a few minutes.")
+		),
+		(
+			String(localized: "Take a breather"),
+			String(localized: "{time} in. A walk, some water, a stretch — pick one.")
+		),
+		(
+			String(localized: "Pause and recharge"),
+			String(localized: "Great focus for {time}. Rest is part of the work.")
+		),
+		(
+			String(localized: "Step away for a bit"),
+			String(localized: "{time} done. The best ideas come after breaks.")
+		),
+	]
+
+	static func random(workedTime: String) -> (String, String) {
+		let (title, body) = messages.randomElement()!
+		return (title, body.replacingOccurrences(of: "{time}", with: workedTime))
 	}
 }
