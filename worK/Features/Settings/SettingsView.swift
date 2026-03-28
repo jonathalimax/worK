@@ -7,6 +7,8 @@ import SwiftUI
 struct SettingsView: View {
 	let viewModel: WorkDayViewModel?
 
+	@Dependency(\.analyticsClient) private var analytics
+
 	@State private var targetHours: Double = AppConstants.defaultTargetHours
 	@State private var launchAtLogin = false
 	@State private var reminderEnabled = true
@@ -58,6 +60,7 @@ struct SettingsView: View {
 				}
 				.tint(.blue)
 				.onChange(of: targetHours) { _, newValue in
+					analytics.track(.settingChanged(.targetHours, value: String(format: "%.1f", newValue)))
 					@Dependency(\.settingsClient) var settings
 					settings.setTargetHours(newValue)
 					// Update current work day's target hours
@@ -110,6 +113,7 @@ struct SettingsView: View {
 				}
 				.tint(.gray)
 				.onChange(of: registerExternally) { _, newValue in
+					analytics.track(.settingChanged(.registerExternally, value: String(newValue)))
 					@Dependency(\.settingsClient) var settings
 					settings.setRegisterExternally(newValue)
 				}
@@ -123,6 +127,7 @@ struct SettingsView: View {
 				}
 				.tint(.orange)
 				.onChange(of: reminderEnabled) { _, newValue in
+					analytics.track(.settingChanged(.reminderEnabled, value: String(newValue)))
 					@Dependency(\.settingsClient) var settings
 					settings.setReminderEnabled(newValue)
 				}
@@ -147,6 +152,7 @@ struct SettingsView: View {
 						}
 						.tint(.orange)
 						.onChange(of: reminderIntervalMinutes) { _, newValue in
+							analytics.track(.settingChanged(.reminderInterval, value: "\(Int(newValue))"))
 							@Dependency(\.settingsClient) var settings
 							settings.setReminderIntervalMinutes(Int(newValue))
 						}
@@ -195,6 +201,7 @@ struct SettingsView: View {
 				}
 				.tint(.red)
 				.onChange(of: stopRecordingEnabled) { _, newValue in
+					analytics.track(.settingChanged(.stopRecordingEnabled, value: String(newValue)))
 					@Dependency(\.settingsClient) var settings
 					settings.setStopRecordingEnabled(newValue)
 				}
@@ -207,6 +214,7 @@ struct SettingsView: View {
 					}
 					.pickerStyle(.menu)
 					.onChange(of: stopRecordingTime) { _, newValue in
+						analytics.track(.settingChanged(.stopRecordingTime, value: "\(newValue)"))
 						@Dependency(\.settingsClient) var settings
 						settings.setStopRecordingTime(newValue)
 					}
@@ -258,6 +266,7 @@ struct SettingsView: View {
 				}
 				.tint(.gray)
 				.onChange(of: launchAtLogin) { _, newValue in
+					analytics.track(.settingChanged(.launchAtLogin, value: String(newValue)))
 					@Dependency(\.settingsClient) var settings
 					settings.setLaunchAtLogin(newValue)
 				}
@@ -339,6 +348,7 @@ struct SettingsView: View {
 					.background(Color.white.opacity(0.08))
 
 				Button {
+					analytics.track(.supportGithubSponsorsTapped)
 					if let url = URL(string: AppConstants.githubSponsorsURL) {
 						NSWorkspace.shared.open(url)
 					}
@@ -411,6 +421,7 @@ struct SettingsView: View {
 
 
 				Button {
+					analytics.track(.updatesCheckTapped)
 					@Dependency(\.updateClient) var updateClient
 					updateClient.checkForUpdates()
 				} label: {
