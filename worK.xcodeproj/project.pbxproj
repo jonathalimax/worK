@@ -24,7 +24,6 @@
 		16C42238E790E99BBC47FA6B /* MonthlyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3645867D105B72550F11EA /* MonthlyChartView.swift */; };
 		1958318C4DE87A9CCA0263A6 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD37309B1881791F793C43C /* DashboardView.swift */; };
 		19648674E12066A2FFDF83B6 /* BreakSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14BE11732533932F13C0EA /* BreakSession.swift */; };
-		19A093E70C0EE736F44DDAF1 /* ReminderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1605C74288BB3517881170B9 /* ReminderOverlayView.swift */; };
 		1BB688C7927703502F0E2665 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6794AA0CD6B46339F87DEA83 /* AppDelegate.swift */; };
 		1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5777C4086D5E79C5CA328 /* ReminderService.swift */; };
 		209244B53E17AB75071D945F /* PopoverContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120E8C351462F29DA1D4746 /* PopoverContentView.swift */; };
@@ -40,10 +39,8 @@
 		3D854E95149BFAEEA49768DC /* AIMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B681AAAD4E596982B73855F /* AIMessageView.swift */; };
 		412CEC25152F9B4636FBB342 /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5EF064DFFA675F9F1FF922 /* Date+Helpers.swift */; };
 		4C384242D96E5E6E56233BBF /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
-		4F1051F9D7DB000FDB340433 /* ReminderOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1605C74288BB3517881170B9 /* ReminderOverlayView.swift */; };
 		5106B523448FA6AD8A16EC79 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		54473A91FD0DD8A5842F0063 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD37309B1881791F793C43C /* DashboardView.swift */; };
-		593097D94FDC2C9EF386247C /* ReminderPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */; };
 		5932CC5CE3153B4ABF3D8EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0640017251C67A152990C5F /* Constants.swift */; };
 		5FA57BF9025D83FF752B71C1 /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CAE58DC70F3D3B3CC155B3 /* success.json */; };
 		64B4D02E1D3C85FFF60EB846 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
@@ -76,7 +73,6 @@
 		979CE8A84B957477E183449F /* AIMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */; };
 		99153F3E843A9507E83C0B60 /* UpdateClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4410846912B737FCE3BF546B /* UpdateClient.swift */; };
 		9EA5E8DBE1D7A8210415EF73 /* ChartSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBB2BEB2C15678196BFE75CB /* ChartSnapshotTests.swift */; };
-		A242520794370D8164255FEC /* ReminderPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */; };
 		A31870146810B5908746BB27 /* MonthlyChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3645867D105B72550F11EA /* MonthlyChartView.swift */; };
 		A5E353E53E84ACB9F775AFDA /* WorkDayQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF70CF897B80EB40BE6766E9 /* WorkDayQueries.swift */; };
 		AA74666F708B64F3C399146F /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = EFEB4459FF2373A4F11E74EF /* Dependencies */; };
@@ -115,7 +111,6 @@
 		0C2472A5D516BCB2317E70E4 /* TrackingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingState.swift; sourceTree = "<group>"; };
 		0CE972C062B073A1DEBFD865 /* HistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewModel.swift; sourceTree = "<group>"; };
 		1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIMessageClient.swift; sourceTree = "<group>"; };
-		1605C74288BB3517881170B9 /* ReminderOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderOverlayView.swift; sourceTree = "<group>"; };
 		1B3645867D105B72550F11EA /* MonthlyChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyChartView.swift; sourceTree = "<group>"; };
 		1DC0F86F3CCA00D31DD28D7F /* coffee-break.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "coffee-break.json"; sourceTree = "<group>"; };
 		2CD85414CCF6312197B871B3 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
@@ -136,7 +131,6 @@
 		6937E59B9EC8F244E46077CB /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		6A14BE11732533932F13C0EA /* BreakSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakSession.swift; sourceTree = "<group>"; };
 		6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPanelController.swift; sourceTree = "<group>"; };
 		8153072D466C1E7F9EC22C2C /* AppDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDatabase.swift; sourceTree = "<group>"; };
 		898BF99F01425C19039DE5BC /* PopoverTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverTab.swift; sourceTree = "<group>"; };
 		89A65766CC748264723B04EE /* worKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = worKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -344,9 +338,7 @@
 		97103042B88130573F4149FA /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
-				1605C74288BB3517881170B9 /* ReminderOverlayView.swift */,
-				7E40176ACA183B16B9F529DA /* ReminderPanelController.swift */,
-				B2E5777C4086D5E79C5CA328 /* ReminderService.swift */,
+					B2E5777C4086D5E79C5CA328 /* ReminderService.swift */,
 			);
 			path = Reminder;
 			sourceTree = "<group>";
@@ -579,9 +571,7 @@
 				96E8C8ECAE6B467C9FDA93BB /* NotificationClient.swift in Sources */,
 				209244B53E17AB75071D945F /* PopoverContentView.swift in Sources */,
 				2839A0FED42CCBC46F66196E /* PopoverTab.swift in Sources */,
-				4F1051F9D7DB000FDB340433 /* ReminderOverlayView.swift in Sources */,
-				A242520794370D8164255FEC /* ReminderPanelController.swift in Sources */,
-				F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */,
+					F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */,
 				8F07D9AC72E3A11B37723DFC /* ScreenLockClient.swift in Sources */,
 				851DBEFA38E0AAF219E0B1F4 /* SettingsClient.swift in Sources */,
 				B19C1CA90B41DD6373E1DC47 /* SettingsSnapshotTests.swift in Sources */,
@@ -623,9 +613,7 @@
 				F0C81ED782E46F0E62BA7BDA /* NotificationClient.swift in Sources */,
 				0163E930BFA40484C59DF43A /* PopoverContentView.swift in Sources */,
 				ECA3A0018D1C33B9B9587274 /* PopoverTab.swift in Sources */,
-				19A093E70C0EE736F44DDAF1 /* ReminderOverlayView.swift in Sources */,
-				593097D94FDC2C9EF386247C /* ReminderPanelController.swift in Sources */,
-				1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */,
+					1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */,
 				3A5540BF7CB4ECEAABB46AC6 /* ScreenLockClient.swift in Sources */,
 				10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */,
 				68893B3E306199D040DC45BB /* SettingsView.swift in Sources */,
