@@ -7,6 +7,7 @@ struct AIMessageView: View {
 	let messageType: MessageType
 	@State private var message: String = ""
 	@State private var isLoading = true
+	@Dependency(\.analyticsClient) private var analytics
 
 	init(messageType: MessageType = .motivational) {
 		self.messageType = messageType
@@ -33,6 +34,7 @@ struct AIMessageView: View {
 				Spacer()
 
 				Button {
+					analytics.track(.aiMessageRefreshed)
 					Task { await loadMessage() }
 				} label: {
 					Image(systemName: "arrow.clockwise")
