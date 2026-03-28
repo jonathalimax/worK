@@ -155,6 +155,7 @@ struct SettingsView: View {
 							analytics.track(.settingChanged(.reminderInterval, value: "\(Int(newValue))"))
 							@Dependency(\.settingsClient) var settings
 							settings.setReminderIntervalMinutes(Int(newValue))
+							viewModel?.onReminderIntervalChanged?()
 						}
 					}
 				}

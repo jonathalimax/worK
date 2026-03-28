@@ -38,6 +38,9 @@ final class WorkDayViewModel {
 	/// Called when work resumes (after a break or from idle). Use to reset external timers.
 	var onWorkResumed: (() -> Void)?
 
+	/// Called when the reminder interval setting changes. Use to restart the reminder timer.
+	var onReminderIntervalChanged: (() -> Void)?
+
 	// MARK: - Private State
 
 	@ObservationIgnored private var timerTask: Task<Void, Never>?

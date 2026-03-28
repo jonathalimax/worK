@@ -33,6 +33,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		controller.viewModel.onWorkResumed = { [weak service] in
 			service?.resetTimer()
 		}
+
+		// Reset reminder timer when the interval setting changes
+		controller.viewModel.onReminderIntervalChanged = { [weak service] in
+			service?.resetTimer()
+		}
 	}
 
 	@MainActor
