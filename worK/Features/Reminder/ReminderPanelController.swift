@@ -1,10 +1,15 @@
 import AppKit
+import Dependencies
 import SwiftUI
 
 // MARK: - ReminderPanelController
 
 @MainActor
 final class ReminderPanelController {
+	// MARK: - Dependencies
+
+	@Dependency(\.analyticsClient) private var analytics
+
 	// MARK: - Properties
 
 	private var panel: NSPanel?
@@ -62,6 +67,7 @@ final class ReminderPanelController {
 		autoDismissTask = Task { @MainActor [weak self] in
 			try? await Task.sleep(for: .seconds(AppConstants.reminderDismissInterval))
 			guard !Task.isCancelled else { return }
+			self?.analytics.track(.reminderAutoDismissed)
 			self?.dismiss()
 		}
 	}

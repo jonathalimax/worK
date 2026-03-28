@@ -1,3 +1,4 @@
+import Dependencies
 import SwiftUI
 
 // MARK: - ReminderOverlayView
@@ -7,6 +8,7 @@ struct ReminderOverlayView: View {
 	let onDismiss: () -> Void
 	let onTakeBreak: () -> Void
 
+	@Dependency(\.analyticsClient) private var analytics
 	@State private var opacity: Double = 0
 
 	var body: some View {
@@ -59,6 +61,7 @@ struct ReminderOverlayView: View {
 	private var actionButtons: some View {
 		HStack(spacing: 12) {
 			Button(String(localized: "Dismiss")) {
+				analytics.track(.reminderDismissed)
 				withAnimation(.easeIn(duration: 0.2)) {
 					opacity = 0
 				}
@@ -70,6 +73,7 @@ struct ReminderOverlayView: View {
 			.controlSize(.regular)
 
 			Button(String(localized: "Take a Break")) {
+				analytics.track(.reminderTakeBreakTapped)
 				withAnimation(.easeIn(duration: 0.2)) {
 					opacity = 0
 				}

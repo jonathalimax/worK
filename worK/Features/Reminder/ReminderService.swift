@@ -11,6 +11,7 @@ final class ReminderService {
 
 	@ObservationIgnored @Dependency(\.settingsClient) private var settingsClient
 	@ObservationIgnored @Dependency(\.continuousClock) private var clock
+	@ObservationIgnored @Dependency(\.analyticsClient) private var analytics
 
 	// MARK: - Properties
 
@@ -62,6 +63,7 @@ final class ReminderService {
 
 		let workedTime = viewModel.workedSeconds.formattedHoursMinutes
 
+		analytics.track(.reminderShown(workedTime: workedTime))
 		panelController.show(workedTime: workedTime) { [weak self] in
 			Task { @MainActor [weak self] in
 				guard let self, let viewModel = self.viewModel else { return }
