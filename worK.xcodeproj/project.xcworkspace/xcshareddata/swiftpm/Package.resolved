@@ -1,5 +1,5 @@
 {
-  "originHash" : "9ddba6e8ef5567fc242e076b0c5639f11c76207d0e9fe75e3275f814c243eedf",
+  "originHash" : "bc78c9481c5c6058facac87dba6c46cdcfcc6878152f9c398aac49d5882ec32e",
   "pins" : [
     {
       "identity" : "combine-schedulers",
@@ -143,6 +143,15 @@
       "state" : {
         "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
         "version" : "602.0.0"
+      }
+    },
+    {
+      "identity" : "swiftsdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/TelemetryDeck/SwiftSDK",
+      "state" : {
+        "revision" : "d41d6e86265dc182ba4474f9ef53ecddbbe052b8",
+        "version" : "2.12.0"
       }
     },
     {
