@@ -6,13 +6,13 @@ import UserNotifications
 
 // MARK: - AppDelegate
 
+@MainActor
 final class AppDelegate: NSObject, NSApplicationDelegate {
 	private var statusBarController: StatusBarController?
 	private var reminderService: ReminderService?
 
 	@Dependency(\.analyticsClient) private var analytics
 
-	@MainActor
 	func applicationDidFinishLaunching(_ notification: Notification) {
 		// Hide dock icon -- this is a menubar-only app
 		NSApp.setActivationPolicy(.accessory)
@@ -59,7 +59,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 		UNUserNotificationCenter.current().setNotificationCategories([category])
 	}
 
-	@MainActor
 	func applicationWillTerminate(_ notification: Notification) {
 		analytics.track(.appTerminated)
 		reminderService?.stopMonitoring()
@@ -71,20 +70,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 // MARK: - UNUserNotificationCenterDelegate
 
-extension AppDelegate: UNUserNotificationCenterDelegate {
+extension AppDelegate: @preconcurrency UNUserNotificationCenterDelegate {
 	func userNotificationCenter(
 		_ center: UNUserNotificationCenter,
 		didReceive response: UNNotificationResponse,
 		withCompletionHandler completionHandler: @escaping () -> Void
 	) {
 		if response.actionIdentifier == "TAKE_BREAK" {
-			let controller = statusBarController
 			Task { @MainActor in
-				await controller?.viewModel.stopWork()
+				await self.statusBarController?.viewModel.stopWork()
+				self.analytics.track(.reminderTakeBreakTapped)
+				completionHandler()
 			}
-			analytics.track(.reminderTakeBreakTapped)
+		} else {
+			completionHandler()
 		}
-		completionHandler()
 	}
 
 	func userNotificationCenter(
