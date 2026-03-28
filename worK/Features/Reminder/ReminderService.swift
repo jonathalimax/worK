@@ -61,7 +61,7 @@ final class ReminderService {
 		let workedTime = viewModel.workedSeconds.formattedHoursMinutes
 		analytics.track(.reminderShown(workedTime: workedTime))
 
-		let (title, body) = BreakReminderMessages.random(workedTime: workedTime)
+		guard let (title, body) = BreakReminderMessages.random(workedTime: workedTime) else { return }
 
 		let content = UNMutableNotificationContent()
 		content.title = title
@@ -69,6 +69,8 @@ final class ReminderService {
 		content.sound = .default
 		content.categoryIdentifier = "BREAK_REMINDER"
 
+		// Fixed identifier: intentionally overwrites any previous pending reminder
+		// so at most one reminder is ever outstanding at a time.
 		let request = UNNotificationRequest(
 			identifier: "break-reminder",
 			content: content,
@@ -109,8 +111,8 @@ private enum BreakReminderMessages {
 		),
 	]
 
-	static func random(workedTime: String) -> (String, String) {
-		let (title, body) = messages.randomElement()!
+	static func random(workedTime: String) -> (String, String)? {
+		guard let (title, body) = messages.randomElement() else { return nil }
 		return (title, body.replacingOccurrences(of: "{time}", with: workedTime))
 	}
 }
