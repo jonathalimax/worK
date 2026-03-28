@@ -18,6 +18,7 @@ final class WorkDayViewModel {
 	@ObservationIgnored @Dependency(\.uuid) private var uuid
 	@ObservationIgnored @Dependency(\.continuousClock) private var clock
 	@ObservationIgnored @Dependency(\.calendar) private var calendar
+	@ObservationIgnored @Dependency(\.analyticsClient) private var analytics
 
 	// MARK: - Published State
 
@@ -44,6 +45,7 @@ final class WorkDayViewModel {
 	@ObservationIgnored private var isStarted = false
 	@ObservationIgnored private var lastScreenEventTime: Date?
 	@ObservationIgnored private var lastScreenEvent: ScreenEvent?
+	@ObservationIgnored private var didTrackDayCompleted = false
 
 	// MARK: - Initialization
 
@@ -59,6 +61,7 @@ final class WorkDayViewModel {
 	func start() {
 		guard !isStarted else { return }
 		isStarted = true
+		didTrackDayCompleted = false
 
 		Task { @MainActor in
 			await ensureTodayExists()
@@ -86,6 +89,7 @@ final class WorkDayViewModel {
 			try database.startWorkSession(workDayId: workDay.id, at: now)
 
 			trackingState = .working
+			analytics.track(.workStarted)
 			onWorkResumed?()
 			await refreshStats()
 		} catch {
@@ -104,6 +108,7 @@ final class WorkDayViewModel {
 			try database.endActiveBreakSession(workDayId: workDay.id, at: now)
 
 			trackingState = .idle
+			analytics.track(.workStopped)
 			await refreshStats()
 		} catch {
 			print("Failed to stop work: \(error)")
@@ -114,7 +119,10 @@ final class WorkDayViewModel {
 		switch trackingState {
 		case .idle, .completed:
 			await startWork()
-		case .working, .onBreak:
+		case .onBreak:
+			analytics.track(.breakEnded(source: .manual))
+			await stopWork()
+		case .working:
 			await stopWork()
 		}
 	}
@@ -136,6 +144,8 @@ final class WorkDayViewModel {
 	func takeBreak() async {
 		// Only allow taking break if we're actively working
 		guard trackingState == .working else { return }
+
+		analytics.track(.breakStarted(source: .manual))
 
 		do {
 			// Lock the screen, which will trigger the automatic break tracking
@@ -218,6 +228,7 @@ final class WorkDayViewModel {
 					try database.endActiveWorkSession(workDayId: workDay.id, at: now)
 					try database.startBreakSession(workDayId: workDay.id, at: now)
 					trackingState = .onBreak
+					analytics.track(.breakStarted(source: .screenLock))
 					print("✅ Break session started")
 				} else {
 					print("⚠️ Not working or on break, ignoring lock event")
@@ -233,6 +244,7 @@ final class WorkDayViewModel {
 				// Start new work session
 				try database.startWorkSession(workDayId: workDay.id, at: now)
 				trackingState = .working
+				analytics.track(.breakEnded(source: .screenUnlock))
 				onWorkResumed?()
 				print("✅ Work session started, state set to .working")
 			}
@@ -273,6 +285,10 @@ final class WorkDayViewModel {
 			let stopHour = settingsClient.stopRecordingTime()
 			if now.hour(calendar: calendar) >= stopHour {
 				await stopWork()
+				if !didTrackDayCompleted {
+					didTrackDayCompleted = true
+					analytics.track(.workDayCompleted(hoursWorked: String(format: "%.1f", workedSeconds / 3600)))
+				}
 				trackingState = .completed
 			}
 		}
@@ -331,6 +347,10 @@ final class WorkDayViewModel {
 				// When already tracking, only check for completion state
 				// Don't override explicit state changes from screen events
 				if workedSeconds > 0, remainingSeconds <= 0, trackingState != .completed {
+					if !didTrackDayCompleted {
+						didTrackDayCompleted = true
+						analytics.track(.workDayCompleted(hoursWorked: String(format: "%.1f", workedSeconds / 3600)))
+					}
 					trackingState = .completed
 				}
 			}
