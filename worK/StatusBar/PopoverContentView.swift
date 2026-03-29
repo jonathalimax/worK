@@ -28,9 +28,9 @@ struct PopoverContentView: View {
 			width: AppConstants.popoverWidth,
 			height: AppConstants.popoverHeight
 		)
+		.background(Color(NSColor.windowBackgroundColor).opacity(0.8))
 		.background(.ultraThinMaterial)
 		.clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
-		.shadow(color: .black.opacity(0.35), radius: 24, y: 8)
 		.onAppear {
 			analytics.track(.tabViewed(selectedTab))
 		}

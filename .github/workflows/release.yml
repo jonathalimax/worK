@@ -51,11 +51,20 @@ jobs:
           mkdir -p build/Release
           cp -R build/worK.xcarchive/Products/Applications/worK.app build/Release/
 
-      - name: Create ZIP for Distribution
+      - name: Install create-dmg
+        run: brew install create-dmg
+
+      - name: Create DMG for Distribution
         run: |
-          cd build/Release
-          zip -r ../../worK.zip worK.app
-          cd ../..
+          create-dmg \
+            --volname "worK" \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --icon "worK.app" 150 190 \
+            --hide-extension "worK.app" \
+            --app-drop-link 450 190 \
+            worK.dmg \
+            build/Release/worK.app
 
       - name: Install Sparkle Tools
         run: |
@@ -74,7 +83,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: worK.zip
+          files: worK.dmg
           draft: false
           prerelease: false
         env:
@@ -85,12 +94,12 @@ jobs:
           SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
           VERSION="${{ steps.version.outputs.VERSION }}"
-          DOWNLOAD_URL="https://github.com/jonathalimax/worK/releases/download/v${VERSION}/worK.zip"
+          DOWNLOAD_URL="https://github.com/jonathalimax/worK/releases/download/v${VERSION}/worK.dmg"
           DATE=$(date -u +"%a, %d %b %Y %H:%M:%S +0000")
 
-          # Sign the zip with EdDSA key — outputs: sparkle:edSignature="..." length="..."
+          # Sign the dmg with EdDSA key — outputs: sparkle:edSignature="..." length="..."
           echo "$SPARKLE_PRIVATE_KEY" > sparkle_key.txt
-          SIGNATURE=$(./bin/sign_update worK.zip -f sparkle_key.txt)
+          SIGNATURE=$(./bin/sign_update worK.dmg -f sparkle_key.txt)
           rm sparkle_key.txt
 
           cat > appcast.xml << EOF

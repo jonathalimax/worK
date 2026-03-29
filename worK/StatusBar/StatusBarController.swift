@@ -151,7 +151,8 @@ final class StatusBarController {
 		panel.level = .popUpMenu
 		panel.backgroundColor = .clear
 		panel.isOpaque = false
-		panel.hasShadow = false
+		panel.hasShadow = true
+		panel.appearance = NSAppearance(named: .darkAqua)
 		panel.collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
 
 		let contentView = PopoverContentView(viewModel: viewModel, popoverState: popoverState)
