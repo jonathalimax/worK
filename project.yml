@@ -48,6 +48,9 @@ packages:
   Lottie:
     url: https://github.com/airbnb/lottie-ios
     from: "4.6.0"
+  TelemetryDeck:
+    url: https://github.com/TelemetryDeck/SwiftSDK
+    from: "2.12.0"
 schemes:
   worK:
     build:
@@ -93,6 +96,8 @@ targets:
         product: Sparkle
       - package: Lottie
         product: Lottie
+      - package: TelemetryDeck
+        product: TelemetryDeck
       - sdk: ServiceManagement.framework
       - sdk: AppKit.framework
   worKTests:
