@@ -58,6 +58,9 @@ final class ReminderService {
 		guard settingsClient.reminderEnabled() else { return }
 		guard let viewModel, viewModel.trackingState == .working else { return }
 
+		let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
+		guard notificationSettings.authorizationStatus == .authorized else { return }
+
 		let workedTime = viewModel.workedSeconds.formattedHoursMinutes
 		analytics.track(.reminderShown(workedTime: workedTime))
 
@@ -78,6 +81,10 @@ final class ReminderService {
 		)
 
 		try? await UNUserNotificationCenter.current().add(request)
+		Task {
+			try? await Task.sleep(for: .seconds(30))
+			UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["break-reminder"])
+		}
 	}
 }
 

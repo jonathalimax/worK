@@ -41,6 +41,9 @@ final class WorkDayViewModel {
 	/// Called when the reminder interval setting changes. Use to restart the reminder timer.
 	var onReminderIntervalChanged: (() -> Void)?
 
+	/// Called once when the work day is completed (target hours reached or auto-stop triggered).
+	var onDayCompleted: (() -> Void)?
+
 	// MARK: - Private State
 
 	@ObservationIgnored private var timerTask: Task<Void, Never>?
@@ -49,6 +52,9 @@ final class WorkDayViewModel {
 	@ObservationIgnored private var lastScreenEventTime: Date?
 	@ObservationIgnored private var lastScreenEvent: ScreenEvent?
 	@ObservationIgnored private var didTrackDayCompleted = false
+	/// Set when the user explicitly resumes work after the day target was already reached.
+	/// Prevents refreshStats from reverting state back to .completed while in overtime.
+	@ObservationIgnored private var isOvertimeTracking = false
 
 	// MARK: - Initialization
 
@@ -83,6 +89,10 @@ final class WorkDayViewModel {
 
 	func startWork() async {
 		guard let workDay = currentWorkDay else { return }
+
+		if trackingState == .completed {
+			isOvertimeTracking = true
+		}
 
 		do {
 			// End any active break
@@ -216,10 +226,11 @@ final class WorkDayViewModel {
 			return
 		}
 
-		// Don't track if work day is already completed
-		guard trackingState != .completed else {
-			print("⚠️ Work day already completed, ignoring screen event")
-			return
+		// On screen unlock, allow resuming from .completed (overtime tracking).
+		// On screen lock while completed, nothing to do.
+		if trackingState == .completed {
+			guard event == .unlocked else { return }
+			isOvertimeTracking = true
 		}
 
 		do {
@@ -279,6 +290,8 @@ final class WorkDayViewModel {
 		   !now.isSameDay(as: workDay.date, calendar: calendar) {
 			// Day changed: stop current work and reset
 			await stopWork()
+			isOvertimeTracking = false
+			didTrackDayCompleted = false
 			await ensureTodayExists()
 		}
 
@@ -291,6 +304,7 @@ final class WorkDayViewModel {
 				if !didTrackDayCompleted {
 					didTrackDayCompleted = true
 					analytics.track(.workDayCompleted(hoursWorked: String(format: "%.1f", workedSeconds / 3600)))
+					onDayCompleted?()
 				}
 				trackingState = .completed
 			}
@@ -337,7 +351,6 @@ final class WorkDayViewModel {
 			progress = dailySummary.progress(now: currentTime)
 
 			// Update tracking state based on active sessions
-			// Only update state if we're currently idle (initial state) or if we need to detect completion
 			let previousState = trackingState
 			if trackingState == .idle {
 				// When idle, set state based on what's actually happening in the database
@@ -346,13 +359,26 @@ final class WorkDayViewModel {
 				} else if dailySummary.isWorking {
 					trackingState = .working
 				}
+			} else if trackingState == .completed, remainingSeconds > 0 {
+				// Target was increased beyond current progress: step back from completed
+				isOvertimeTracking = false
+				didTrackDayCompleted = false
+				if dailySummary.isWorking {
+					trackingState = .working
+				} else if dailySummary.isOnBreak {
+					trackingState = .onBreak
+				} else {
+					trackingState = .idle
+				}
 			} else {
 				// When already tracking, only check for completion state
 				// Don't override explicit state changes from screen events
-				if workedSeconds > 0, remainingSeconds <= 0, trackingState != .completed {
+				// Don't auto-complete when the user has opted into overtime tracking
+				if workedSeconds > 0, remainingSeconds <= 0, trackingState != .completed, !isOvertimeTracking {
 					if !didTrackDayCompleted {
 						didTrackDayCompleted = true
 						analytics.track(.workDayCompleted(hoursWorked: String(format: "%.1f", workedSeconds / 3600)))
+						onDayCompleted?()
 					}
 					trackingState = .completed
 				}

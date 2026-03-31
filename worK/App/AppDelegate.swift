@@ -41,22 +41,56 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			service?.resetTimer()
 		}
 
+		// Send a local notification when the work day is completed
+		controller.viewModel.onDayCompleted = {
+			@Dependency(\.settingsClient) var settings
+			guard settings.registerExternally() else { return }
+
+			let content = UNMutableNotificationContent()
+			content.title = String(localized: "Daily goal reached!")
+			content.body = String(localized: "Time to register your completed work hours.")
+			content.sound = .default
+			content.categoryIdentifier = "REGISTER_REMINDER"
+
+			let request = UNNotificationRequest(
+				identifier: "register-reminder",
+				content: content,
+				trigger: nil
+			)
+
+			UNUserNotificationCenter.current().add(request) { _ in }
+			Task {
+				try? await Task.sleep(for: .seconds(30))
+				UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["register-reminder"])
+			}
+		}
+
 		// Set up native notifications
 		UNUserNotificationCenter.current().delegate = self
-		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+		UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
+			if !granted {
+				print("⚠️ Notification permission not granted. Enable in System Settings > Notifications > worK")
+			}
+		}
 
 		let takeBreakAction = UNNotificationAction(
 			identifier: "TAKE_BREAK",
 			title: String(localized: "Take a Break"),
 			options: []
 		)
-		let category = UNNotificationCategory(
+		let breakCategory = UNNotificationCategory(
 			identifier: "BREAK_REMINDER",
 			actions: [takeBreakAction],
 			intentIdentifiers: [],
 			options: []
 		)
-		UNUserNotificationCenter.current().setNotificationCategories([category])
+		let registerCategory = UNNotificationCategory(
+			identifier: "REGISTER_REMINDER",
+			actions: [],
+			intentIdentifiers: [],
+			options: []
+		)
+		UNUserNotificationCenter.current().setNotificationCategories([breakCategory, registerCategory])
 	}
 
 	func applicationWillTerminate(_ notification: Notification) {

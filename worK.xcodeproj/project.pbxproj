@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,8 +15,6 @@
 		0D869A6B8B47E3715FA47FA5 /* BreakSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A14BE11732533932F13C0EA /* BreakSession.swift */; };
 		0FCAF84054E5FEAEC62FF470 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5860D3E802D426526A660A14 /* SettingsClient.swift */; };
-		25AE85A1947E40B781E8E142 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */; };
-		B9CFB1BA824E4E10A36A5B85 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */; };
 		11115E63BBA6A6C6C3A854CB /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		11715A5E415896662F2CB25E /* WorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532000D87FCD51C74160ADD /* WorkDay.swift */; };
 		12748A9E8799247E9D5E43A2 /* TrackingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C2472A5D516BCB2317E70E4 /* TrackingState.swift */; };
@@ -39,9 +37,11 @@
 		3D854E95149BFAEEA49768DC /* AIMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B681AAAD4E596982B73855F /* AIMessageView.swift */; };
 		412CEC25152F9B4636FBB342 /* Date+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5EF064DFFA675F9F1FF922 /* Date+Helpers.swift */; };
 		4C384242D96E5E6E56233BBF /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
+		4E6B2F7D4B3CEB1A21C679FB /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = 3B21E24DA154AE1DBEB1ECD4 /* TelemetryDeck */; };
 		5106B523448FA6AD8A16EC79 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD85414CCF6312197B871B3 /* LottieView.swift */; };
 		54473A91FD0DD8A5842F0063 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBD37309B1881791F793C43C /* DashboardView.swift */; };
 		5932CC5CE3153B4ABF3D8EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0640017251C67A152990C5F /* Constants.swift */; };
+		5F079DBF7319DA5C1392F9F1 /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464A0A39098AF567D51DBB71 /* AnalyticsClient.swift */; };
 		5FA57BF9025D83FF752B71C1 /* success.json in Resources */ = {isa = PBXBuildFile; fileRef = 07CAE58DC70F3D3B3CC155B3 /* success.json */; };
 		64B4D02E1D3C85FFF60EB846 /* AppDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8153072D466C1E7F9EC22C2C /* AppDatabase.swift */; };
 		672C29E11AFB92CA8A809EB2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6AA0B7DB41DC9A2A53ED4813 /* Assets.xcassets */; };
@@ -90,6 +90,7 @@
 		D73BC60FE9517D8C168A17B2 /* WorkDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C08EAD517AD648688471C23 /* WorkDayViewModel.swift */; };
 		DAFE8AF3FA1E5A08B80D3D9E /* AIMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B681AAAD4E596982B73855F /* AIMessageView.swift */; };
 		E040EF8687DBA9EA06A94B43 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA16A957E2AB000D66409306 /* StatusBarController.swift */; };
+		E1E7E3D08874B852AF4655DE /* AnalyticsClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464A0A39098AF567D51DBB71 /* AnalyticsClient.swift */; };
 		E3B568505CF243D9C1D58C6F /* WorkDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5532000D87FCD51C74160ADD /* WorkDay.swift */; };
 		E97E9BFC5907E97DF2A3A6AA /* SparkleCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0052440C7A9E6E090C6B8AD5 /* SparkleCoordinator.swift */; };
 		E9963F72E0EA85CF63DB8A43 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = AC580F9ED45C61443270A082 /* Lottie */; };
@@ -98,7 +99,6 @@
 		F3BDCEF114E57E0FA11E27BA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 6937E59B9EC8F244E46077CB /* Localizable.xcstrings */; };
 		F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5777C4086D5E79C5CA328 /* ReminderService.swift */; };
 		F9705F20E9CA6ED65175E948 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = A2862382529A29F66C792B6F /* Sparkle */; };
-		TD1A2B3C4D5E6F7A8B9C0D1E /* TelemetryDeck in Frameworks */ = {isa = PBXBuildFile; productRef = TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */; };
 		FAF473792CED791FC6AAFE78 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 66408F80229E2B939BA89008 /* ServiceManagement.framework */; };
 		FBD7A7E355F46B417BA86584 /* StatsCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBF0DC546DC1EE9C3593A4F8 /* StatsCardView.swift */; };
 		FE5A254CF0F8D9A9CDFFA894 /* AIMessageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */; };
@@ -117,11 +117,11 @@
 		407CF8C92766C3D610A1A4D6 /* worKApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = worKApp.swift; sourceTree = "<group>"; };
 		4410846912B737FCE3BF546B /* UpdateClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateClient.swift; sourceTree = "<group>"; };
 		45B77F863D68B9CD1E31EA4E /* DailySummary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailySummary.swift; sourceTree = "<group>"; };
+		464A0A39098AF567D51DBB71 /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		4FA1806DF99F3661E68992C9 /* TestDependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDependencies.swift; sourceTree = "<group>"; };
 		5532000D87FCD51C74160ADD /* WorkDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDay.swift; sourceTree = "<group>"; };
 		575DC3712EB2B7E0098A9BA3 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		5860D3E802D426526A660A14 /* SettingsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsClient.swift; sourceTree = "<group>"; };
-		0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsClient.swift; sourceTree = "<group>"; };
 		5909D20355AAE99C457528A2 /* DatabaseBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseBootstrap.swift; sourceTree = "<group>"; };
 		5C08EAD517AD648688471C23 /* WorkDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkDayViewModel.swift; sourceTree = "<group>"; };
 		65F657572FF2BC1DA93C96A1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -180,9 +180,9 @@
 				16B70D3861547D638CA6B107 /* DependenciesMacros in Frameworks */,
 				F9705F20E9CA6ED65175E948 /* Sparkle in Frameworks */,
 				E9963F72E0EA85CF63DB8A43 /* Lottie in Frameworks */,
+				4E6B2F7D4B3CEB1A21C679FB /* TelemetryDeck in Frameworks */,
 				7DF59835438609FB51DA82D7 /* ServiceManagement.framework in Frameworks */,
 				D67532B13072ABBBC1F23009 /* AppKit.framework in Frameworks */,
-				TD1A2B3C4D5E6F7A8B9C0D1E /* TelemetryDeck in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,8 +247,8 @@
 		49028737A223E80C9140DAE5 /* Dependencies */ = {
 			isa = PBXGroup;
 			children = (
-				0C7B9DEA938D4089A1B1733D /* AnalyticsClient.swift */,
 				1368C6FFB6FE82EA84C35CB6 /* AIMessageClient.swift */,
+				464A0A39098AF567D51DBB71 /* AnalyticsClient.swift */,
 				5909D20355AAE99C457528A2 /* DatabaseBootstrap.swift */,
 				FBC28DF4F60B7AEB69A40CED /* NotificationClient.swift */,
 				E262AF5D78D7662ABCCD5D96 /* ScreenLockClient.swift */,
@@ -338,7 +338,7 @@
 		97103042B88130573F4149FA /* Reminder */ = {
 			isa = PBXGroup;
 			children = (
-					B2E5777C4086D5E79C5CA328 /* ReminderService.swift */,
+				B2E5777C4086D5E79C5CA328 /* ReminderService.swift */,
 			);
 			path = Reminder;
 			sourceTree = "<group>";
@@ -451,7 +451,7 @@
 				0B1983D4E8C517352BF8FD57 /* DependenciesMacros */,
 				A2862382529A29F66C792B6F /* Sparkle */,
 				AC580F9ED45C61443270A082 /* Lottie */,
-				TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */,
+				3B21E24DA154AE1DBEB1ECD4 /* TelemetryDeck */,
 			);
 			productName = worK;
 			productReference = D59458FEBF47CE31B8428F72 /* worK.app */;
@@ -487,7 +487,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 1600;
 			};
 			buildConfigurationList = 0DC42FDB83CE079C40386B96 /* Build configuration list for PBXProject "worK" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -505,11 +505,12 @@
 			packageReferences = (
 				FC6300BCBE75F918A4A0CD5B /* XCRemoteSwiftPackageReference "lottie-ios" */,
 				67D3392BDB5305EF91301496 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				A6BF817E243C954908D4B7FE /* XCRemoteSwiftPackageReference "SwiftSDK" */,
 				C6D00376EEC49891111B1416 /* XCRemoteSwiftPackageReference "sqlite-data" */,
 				3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */,
 				7EF8FF6F3A784524EDC0C8BC /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
-				TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */,
 			);
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -553,7 +554,7 @@
 			files = (
 				FE5A254CF0F8D9A9CDFFA894 /* AIMessageClient.swift in Sources */,
 				DAFE8AF3FA1E5A08B80D3D9E /* AIMessageView.swift in Sources */,
-				25AE85A1947E40B781E8E142 /* AnalyticsClient.swift in Sources */,
+				5F079DBF7319DA5C1392F9F1 /* AnalyticsClient.swift in Sources */,
 				4C384242D96E5E6E56233BBF /* AppDatabase.swift in Sources */,
 				0D869A6B8B47E3715FA47FA5 /* BreakSession.swift in Sources */,
 				9EA5E8DBE1D7A8210415EF73 /* ChartSnapshotTests.swift in Sources */,
@@ -571,7 +572,7 @@
 				96E8C8ECAE6B467C9FDA93BB /* NotificationClient.swift in Sources */,
 				209244B53E17AB75071D945F /* PopoverContentView.swift in Sources */,
 				2839A0FED42CCBC46F66196E /* PopoverTab.swift in Sources */,
-					F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */,
+				F4A601B5D7033A26AB3D4B59 /* ReminderService.swift in Sources */,
 				8F07D9AC72E3A11B37723DFC /* ScreenLockClient.swift in Sources */,
 				851DBEFA38E0AAF219E0B1F4 /* SettingsClient.swift in Sources */,
 				B19C1CA90B41DD6373E1DC47 /* SettingsSnapshotTests.swift in Sources */,
@@ -596,7 +597,7 @@
 			files = (
 				979CE8A84B957477E183449F /* AIMessageClient.swift in Sources */,
 				3D854E95149BFAEEA49768DC /* AIMessageView.swift in Sources */,
-				B9CFB1BA824E4E10A36A5B85 /* AnalyticsClient.swift in Sources */,
+				E1E7E3D08874B852AF4655DE /* AnalyticsClient.swift in Sources */,
 				64B4D02E1D3C85FFF60EB846 /* AppDatabase.swift in Sources */,
 				1BB688C7927703502F0E2665 /* AppDelegate.swift in Sources */,
 				19648674E12066A2FFDF83B6 /* BreakSession.swift in Sources */,
@@ -613,7 +614,7 @@
 				F0C81ED782E46F0E62BA7BDA /* NotificationClient.swift in Sources */,
 				0163E930BFA40484C59DF43A /* PopoverContentView.swift in Sources */,
 				ECA3A0018D1C33B9B9587274 /* PopoverTab.swift in Sources */,
-					1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */,
+				1F1848EE7605EBA7BCA26095 /* ReminderService.swift in Sources */,
 				3A5540BF7CB4ECEAABB46AC6 /* ScreenLockClient.swift in Sources */,
 				10B70EFE3425F67DAFF59338 /* SettingsClient.swift in Sources */,
 				68893B3E306199D040DC45BB /* SettingsView.swift in Sources */,
@@ -640,8 +641,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -674,11 +673,9 @@
 				CODE_SIGN_ENTITLEMENTS = worK/Resources/worK.entitlements;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.4.0;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -700,7 +697,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.worK.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -713,7 +709,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = worK/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -730,8 +725,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -764,11 +757,9 @@
 				CODE_SIGN_ENTITLEMENTS = worK/Resources/worK.entitlements;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1.4.0;
-				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -797,7 +788,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.worK.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
@@ -810,7 +800,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = worK/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -826,7 +815,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = worK/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -842,7 +830,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = YES;
-				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = worK/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -887,14 +874,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/TelemetryDeck/SwiftSDK";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-dependencies";
@@ -917,6 +896,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.18.3;
+			};
+		};
+		A6BF817E243C954908D4B7FE /* XCRemoteSwiftPackageReference "SwiftSDK" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/TelemetryDeck/SwiftSDK";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.12.0;
 			};
 		};
 		C6D00376EEC49891111B1416 /* XCRemoteSwiftPackageReference "sqlite-data" */ = {
@@ -942,6 +929,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = DependenciesMacros;
+		};
+		3B21E24DA154AE1DBEB1ECD4 /* TelemetryDeck */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A6BF817E243C954908D4B7FE /* XCRemoteSwiftPackageReference "SwiftSDK" */;
+			productName = TelemetryDeck;
 		};
 		4442A9036CA85AA53CDA1F76 /* Dependencies */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -982,11 +974,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3C9CB79306FB8219DA23C22F /* XCRemoteSwiftPackageReference "swift-dependencies" */;
 			productName = Dependencies;
-		};
-		TD3A4B5C6D7E8F9A0B1C2D3E /* TelemetryDeck */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = TD2A3B4C5D6E7F8A9B0C1D2E /* XCRemoteSwiftPackageReference "SwiftSDK" */;
-			productName = TelemetryDeck;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

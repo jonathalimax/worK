@@ -1,6 +1,7 @@
 import AppKit
 import Dependencies
 import SwiftUI
+import UserNotifications
 
 // MARK: - SettingsView
 
@@ -16,6 +17,7 @@ struct SettingsView: View {
 	@State private var stopRecordingEnabled = false
 	@State private var stopRecordingTime: Int = AppConstants.defaultStopRecordingTime
 	@State private var registerExternally = true
+	@State private var notificationAuthStatus: UNAuthorizationStatus = .notDetermined
 
 	init(viewModel: WorkDayViewModel? = nil) {
 		self.viewModel = viewModel
@@ -105,6 +107,10 @@ struct SettingsView: View {
 	private var remindersSection: some View {
 		VStack(alignment: .leading, spacing: 10) {
 			sectionHeader(String(localized: "Reminders"), icon: "bell.fill", color: .orange)
+
+			if notificationAuthStatus == .denied {
+				notificationPermissionWarning
+			}
 
 			VStack(alignment: .leading, spacing: 14) {
 				Toggle(isOn: $registerExternally) {
@@ -499,6 +505,54 @@ struct SettingsView: View {
 		stopRecordingEnabled = settings.stopRecordingEnabled()
 		stopRecordingTime = settings.stopRecordingTime()
 		registerExternally = settings.registerExternally()
+		Task {
+			let settings = await UNUserNotificationCenter.current().notificationSettings()
+			notificationAuthStatus = settings.authorizationStatus
+			// If not yet determined, request now so the system dialog appears
+			if notificationAuthStatus == .notDetermined {
+				_ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+				let updated = await UNUserNotificationCenter.current().notificationSettings()
+				notificationAuthStatus = updated.authorizationStatus
+			}
+		}
+	}
+
+	// MARK: - Notification Permission Warning
+
+	private var notificationPermissionWarning: some View {
+		HStack(spacing: 10) {
+			Image(systemName: "bell.slash.fill")
+				.font(.system(size: 13, weight: .semibold))
+				.foregroundStyle(.orange)
+
+			VStack(alignment: .leading, spacing: 2) {
+				Text(String(localized: "Notifications are disabled"))
+					.font(.system(size: 12, weight: .semibold))
+
+				Text(String(localized: "Enable them in System Settings to receive reminders."))
+					.font(.system(size: 11))
+					.foregroundStyle(.secondary)
+					.fixedSize(horizontal: false, vertical: true)
+			}
+
+			Spacer()
+
+			Button(String(localized: "Open")) {
+				NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+			}
+			.font(.system(size: 11, weight: .semibold))
+			.buttonStyle(.plain)
+			.foregroundStyle(.orange)
+		}
+		.padding(12)
+		.background {
+			RoundedRectangle(cornerRadius: 10, style: .continuous)
+				.fill(Color.orange.opacity(0.08))
+				.overlay {
+					RoundedRectangle(cornerRadius: 10, style: .continuous)
+						.strokeBorder(Color.orange.opacity(0.25), lineWidth: 1)
+				}
+		}
 	}
 }
 

@@ -3,7 +3,7 @@ import Foundation
 extension TimeInterval {
 	/// Formats the interval as "H:MM" (e.g. "7:58", "0:45").
 	var formattedHoursMinutes: String {
-		let totalSeconds = Int(max(self, 0))
+        let totalSeconds = Int(Swift.max(self, 0))
 		let hours = totalSeconds / 3600
 		let minutes = (totalSeconds % 3600) / 60
 		return "\(hours):\(String(format: "%02d", minutes))"
@@ -11,7 +11,7 @@ extension TimeInterval {
 
 	/// Formats the interval as "X hours Y minutes" for accessibility.
 	var formattedAccessible: String {
-		let totalSeconds = Int(max(self, 0))
+        let totalSeconds = Int(Swift.max(self, 0))
 		let hours = totalSeconds / 3600
 		let minutes = (totalSeconds % 3600) / 60
 		var parts: [String] = []
