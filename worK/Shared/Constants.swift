@@ -5,7 +5,6 @@ enum AppConstants {
 	static let appName = "worK"
 	static let popoverWidth: CGFloat = 380
 	static let timerInterval: TimeInterval = 60
-	static let reminderDismissInterval: TimeInterval = 30
 	static let defaultTargetHours: Double = 8.0
 	static let defaultReminderIntervalMinutes: Int = 60
 	static let defaultStopRecordingTime: Int = 20 // hour of day (24h)

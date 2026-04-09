@@ -80,11 +80,10 @@ final class ReminderService {
 			trigger: nil
 		)
 
+		// Remove any previously delivered reminder before showing the next one,
+		// so at most one break reminder is ever visible in Notification Center.
+		UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["break-reminder"])
 		try? await UNUserNotificationCenter.current().add(request)
-		Task {
-			try? await Task.sleep(for: .seconds(30))
-			UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["break-reminder"])
-		}
 	}
 }
 

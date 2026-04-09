@@ -250,6 +250,11 @@ final class WorkDayViewModel {
 
 			case .unlocked:
 				print("🔓 Handling screen unlock")
+				// Only reset the reminder timer when actually coming out of a break/idle.
+				// If already working (e.g. spurious sessionDidBecomeActive), keep the
+				// existing countdown so the break reminder can still fire.
+				let wasWorking = trackingState == .working
+
 				// Screen unlocked: automatically start/resume work
 				// End any active break first
 				try database.endActiveBreakSession(workDayId: workDay.id, at: now)
@@ -259,7 +264,9 @@ final class WorkDayViewModel {
 				try database.startWorkSession(workDayId: workDay.id, at: now)
 				trackingState = .working
 				analytics.track(.breakEnded(source: .screenUnlock))
-				onWorkResumed?()
+				if !wasWorking {
+					onWorkResumed?()
+				}
 				print("✅ Work session started, state set to .working")
 			}
 

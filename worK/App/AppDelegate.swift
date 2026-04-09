@@ -59,10 +59,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 			)
 
 			UNUserNotificationCenter.current().add(request) { _ in }
-			Task {
-				try? await Task.sleep(for: .seconds(30))
-				UNUserNotificationCenter.current().removeDeliveredNotifications(withIdentifiers: ["register-reminder"])
-			}
 		}
 
 		// Set up native notifications
