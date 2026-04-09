@@ -6,14 +6,14 @@
     <description>Most recent changes for worK</description>
     <language>en</language>
     <item>
-      <title>Version 1.4.1</title>
+      <title>Version 1.4.2</title>
       <link>https://github.com/jonathalimax/worK/releases</link>
-      <sparkle:version>1.4.1</sparkle:version>
-      <sparkle:shortVersionString>1.4.1</sparkle:shortVersionString>
-      <pubDate>Tue, 31 Mar 2026 23:05:01 +0000</pubDate>
-      <enclosure url="https://github.com/jonathalimax/worK/releases/download/v1.4.1/worK.dmg"
+      <sparkle:version>1.4.2</sparkle:version>
+      <sparkle:shortVersionString>1.4.2</sparkle:shortVersionString>
+      <pubDate>Wed, 09 Apr 2026 08:26:00 +0000</pubDate>
+      <enclosure url="https://github.com/jonathalimax/worK/releases/download/v1.4.2/worK.dmg"
                  type="application/octet-stream"
-                 sparkle:edSignature="Tf+jDybLvlVaUQXrTPDcsfCtZ79u2orI2XLHiL5Xh1XDrhOo1Woeoiq50t6ldE9cim/hWOQHN3PqRNYEmI1xDQ==" length="11965034" />
+                 sparkle:edSignature="zh4aX6pR+wvOITDyIDPf618Qzbga1tY/4F+1KZY02/T+WwF5H3Mo6ENgtWcFfrxQrpzQNYKV28VZGf3LsegCDQ==" length="12016842" />
     </item>
   </channel>
 </rss>
