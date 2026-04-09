@@ -289,6 +289,68 @@ xcodebuild -scheme worK -configuration Debug test
 
 The test suite includes snapshot tests for all major views (Dashboard, Charts, History, Settings).
 
+## Releasing a New Version
+
+Releases are automated via GitHub Actions. Pushing a version tag triggers the workflow which builds the app, creates a DMG, publishes a GitHub Release, signs the update with EdDSA, and updates `appcast.xml` for Sparkle auto-updates.
+
+### Prerequisites (one-time setup)
+
+1. **Generate Sparkle keys:**
+   ```bash
+   ./scripts/generate_sparkle_keys.sh
+   ```
+2. Add the **public key** to `project.yml` under `settings > base`:
+   ```yaml
+   INFOPLIST_KEY_SUPublicEDKey: "YOUR_PUBLIC_KEY"
+   ```
+3. Add the **private key** to GitHub → Settings → Secrets → Actions as `SPARKLE_PRIVATE_KEY`.
+4. Run `xcodegen generate` to regenerate the project.
+
+### Release steps
+
+1. **Update the version** in `project.yml`:
+   ```yaml
+   MARKETING_VERSION: "1.2.0"
+   CURRENT_PROJECT_VERSION: "10"   # increment build number
+   ```
+
+2. **Regenerate, commit, and push:**
+   ```bash
+   xcodegen generate
+   git add .
+   git commit -m "Version 1.2.0"
+   git push
+   ```
+
+3. **Tag and push the tag:**
+   ```bash
+   git tag v1.2.0
+   git push origin v1.2.0
+   ```
+
+4. **GitHub Actions will automatically:**
+   - Build the release archive
+   - Create a `worK.dmg`
+   - Publish a GitHub Release with the DMG attached
+   - Sign the DMG with EdDSA and update `appcast.xml`
+   - Commit the updated `appcast.xml` back to `main`
+
+5. **Verify:** Check the Actions tab for workflow success and the Releases tab for the new release.
+
+### Building a DMG locally
+
+Use `build-dmg.sh` for local builds or testing:
+
+```bash
+./build-dmg.sh                    # Unsigned (testing only)
+./build-dmg.sh --sign             # Code-signed
+./build-dmg.sh --sign --notarize  # Signed + notarized (distribution)
+```
+
+Requires: `brew install xcodegen create-dmg`
+
+---
+
 ## Contributing
 
 Contributions are welcome. Here's how to get started:
