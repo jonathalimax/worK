@@ -27,7 +27,7 @@ NC='\033[0m' # No Color
 
 # Configuration
 APP_NAME="worK"
-VERSION="1.0.0"
+VERSION=$(xcodebuild -scheme worK -configuration Release -showBuildSettings 2>/dev/null | awk '/MARKETING_VERSION/{print $3; exit}')
 BUNDLE_ID="com.worK.app"
 DERIVED_DATA_PATH="./build"
 ARCHIVE_PATH="$DERIVED_DATA_PATH/${APP_NAME}.xcarchive"
