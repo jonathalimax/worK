@@ -114,19 +114,17 @@ final class StatusBarController {
 	private func updateButton(text: String, color: StatusBarColor) {
 		guard let button = statusItem.button else { return }
 
-		let (textColor, tintColor): (NSColor, NSColor?) = switch color {
-		case .green:
-			(.white, .systemGreen)
-		case .yellow:
-			(.white, .systemYellow)
-		case .red:
-			(.white, .systemRed)
-		case .gray:
-			(.systemGray, nil)
+		let tintColor: NSColor? = switch color {
+		case .green: .systemGreen
+		case .yellow: .systemYellow
+		case .red: .systemRed
+		case .gray: nil
 		}
 
+		// Use labelColor so the text adapts automatically to light/dark menu bars
+		// and inverts correctly when the item is highlighted.
 		let attributes: [NSAttributedString.Key: Any] = [
-			.foregroundColor: textColor,
+			.foregroundColor: NSColor.labelColor,
 			.font: NSFont.monospacedDigitSystemFont(ofSize: NSFont.smallSystemFontSize, weight: .medium)
 		]
 		let attributedTitle = NSAttributedString(string: " \(text) ", attributes: attributes)
