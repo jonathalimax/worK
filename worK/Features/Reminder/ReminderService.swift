@@ -57,6 +57,7 @@ final class ReminderService {
 	private func checkAndShowReminder() async {
 		guard settingsClient.reminderEnabled() else { return }
 		guard let viewModel, viewModel.trackingState == .working else { return }
+		guard viewModel.progress < 1.0 else { return }
 
 		let notificationSettings = await UNUserNotificationCenter.current().notificationSettings()
 		guard notificationSettings.authorizationStatus == .authorized else { return }
