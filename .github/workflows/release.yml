@@ -26,6 +26,14 @@ jobs:
       - name: Install XcodeGen
         run: brew install xcodegen
 
+      - name: Set version from tag
+        env:
+          GIT_REF: ${{ github.ref }}
+        run: |
+          VERSION="${GIT_REF#refs/tags/v}"
+          sed -i '' "s/MARKETING_VERSION: .*/MARKETING_VERSION: \"$VERSION\"/" project.yml
+          sed -i '' "s/CURRENT_PROJECT_VERSION: .*/CURRENT_PROJECT_VERSION: \"$VERSION\"/" project.yml
+
       - name: Generate Xcode project
         run: xcodegen generate
 
@@ -76,8 +84,10 @@ jobs:
 
       - name: Get Version
         id: version
+        env:
+          GIT_REF: ${{ github.ref }}
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
+          VERSION="${GIT_REF#refs/tags/v}"
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
